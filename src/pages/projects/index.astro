@@ -1,0 +1,121 @@
+---
+import Base from '../../layouts/Base.astro';
+import { getCollection } from 'astro:content';
+
+const allProjects = await getCollection('projects');
+const projects = allProjects.sort((a, b) => (a.data.order ?? 99) - (b.data.order ?? 99));
+
+const categories = ['All', 'Data Analysis', 'Data Visualization', 'AI / Automation', 'Software'];
+
+const categoryClass = (cat: string) => {
+  if (cat === 'Data Analysis') return 'badge-data';
+  if (cat === 'AI / Automation') return 'badge-auto';
+  if (cat === 'Software') return 'badge-software';
+  return 'badge-viz';
+};
+---
+
+<Base title="Projects — Jeffry Arevalo" description="Data, AI, and software projects">
+  <div class="page">
+    <div class="page-header">
+      <h1>Projects</h1>
+      <p>Data analysis, visualization, AI automation, and software builds.</p>
+    </div>
+
+    <!-- Filter buttons -->
+    <div class="filter-bar" id="filter-bar">
+      {categories.map(cat => (
+        <button class:list={['filter-btn', { active: cat === 'All' }]} data-category={cat}>
+          {cat}
+        </button>
+      ))}
+    </div>
+
+    <div class="cards-grid" id="projects-grid">
+      {projects.map(project => (
+        <a
+          href={`/projects/${project.id}`}
+          class="project-card"
+          data-category={project.data.category}
+        >
+          <div style="display:flex; align-items:center; justify-content:space-between; margin-bottom:0.25rem;">
+            <span class={`category-badge ${categoryClass(project.data.category)}`}>
+              {project.data.category}
+            </span>
+            {project.data.featured && (
+              <span style="font-size:0.7rem; color: var(--text-tertiary);">Featured</span>
+            )}
+          </div>
+          <h3 class="project-card-title">{project.data.title}</h3>
+          <p class="project-card-desc">{project.data.description}</p>
+          <div class="project-card-footer">
+            <div class="tools-list">
+              {project.data.tools.slice(0, 4).map(tool => (
+                <span class="tool-tag">{tool}</span>
+              ))}
+            </div>
+            <div class="card-links">
+              {project.data.links?.github && <span class="card-link">GitHub ↗</span>}
+              {project.data.links?.tableau && <span class="card-link">Tableau ↗</span>}
+              {project.data.links?.demo && <span class="card-link">Demo ↗</span>}
+              {project.data.links?.live && <span class="card-link">Live ↗</span>}
+            </div>
+          </div>
+        </a>
+      ))}
+    </div>
+  </div>
+</Base>
+
+<style>
+.page-header { margin-bottom: 2.5rem; }
+.page-header h1 { font-size: 2.25rem; margin-bottom: 0.5rem; }
+.page-header p { color: var(--text-secondary); font-size: 1.0625rem; }
+
+.filter-bar {
+  display: flex;
+  gap: 0.5rem;
+  flex-wrap: wrap;
+  margin-bottom: 2rem;
+}
+
+.filter-btn {
+  font-family: var(--font-sans);
+  font-size: 0.8125rem;
+  padding: 0.35rem 0.9rem;
+  border-radius: 999px;
+  border: 1px solid var(--border);
+  background: var(--surface);
+  color: var(--text-secondary);
+  cursor: pointer;
+  transition: all 0.15s;
+}
+
+.filter-btn:hover { border-color: var(--border-strong); color: var(--text-primary); }
+.filter-btn.active { background: var(--text-primary); color: var(--bg); border-color: var(--text-primary); }
+
+.project-card[hidden] { display: none; }
+</style>
+
+<script>
+const filterBar = document.getElementById('filter-bar');
+const cards = document.querySelectorAll('#projects-grid .project-card');
+
+filterBar?.addEventListener('click', (e) => {
+  const btn = (e.target as HTMLElement).closest('.filter-btn') as HTMLButtonElement;
+  if (!btn) return;
+
+  document.querySelectorAll('.filter-btn').forEach(b => b.classList.remove('active'));
+  btn.classList.add('active');
+
+  const selected = btn.dataset.category;
+  cards.forEach(card => {
+    const el = card as HTMLElement;
+    if (selected === 'All' || el.dataset.category === selected) {
+      el.removeAttribute('hidden');
+    } else {
+      el.setAttribute('hidden', '');
+    }
+  });
+});
+</script>

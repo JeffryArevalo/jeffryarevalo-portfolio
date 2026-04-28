@@ -1,0 +1,142 @@
+---
+import Base from '../layouts/Base.astro';
+
+const skills = [
+  { area: 'Data & Analytics', items: ['Python', 'SQL', 'Pandas', 'NumPy', 'Tableau', 'Power BI'] },
+  { area: 'AI & Automation', items: ['LLMs / Prompt Engineering', 'Claude / OpenAI APIs', 'n8n', 'Zapier', 'AI Agents'] },
+  { area: 'Software Development', items: ['JavaScript / TypeScript', 'Astro', 'React', 'Node.js', 'Git / GitHub'] },
+  { area: 'Data Journalism', items: ['Investigative Research', 'Data Storytelling', 'Interactive Visualizations', 'Source Verification'] },
+];
+---
+
+<Base title="About — Jeffry Arevalo" description="Data journalist, analyst, and builder working at the intersection of data, AI, and communication.">
+  <div class="page-narrow">
+
+    <div class="about-header">
+      <h1>About</h1>
+    </div>
+
+    <div class="bio">
+      <p>
+        Hi, I'm <strong>Jeffry Arevalo</strong>, a data journalist, analyst, and builder.
+        I work at the intersection of data investigation, AI automation, and software development,
+        building tools that extract insights and publishing what I find.
+      </p>
+      <p>
+        My work spans in-depth data investigations like <a href="https://jeffryarevalo.github.io/ai-race/" target="_blank" rel="noopener">The AI Race</a> and
+        <a href="https://jeffryarevalo.github.io/k-shaped-economy/" target="_blank" rel="noopener">The K-Shaped Economy</a>, alongside building AI-powered automation
+        systems and software projects. I am drawn to questions where the data reveals a story
+        that the headlines miss.
+      </p>
+      <p>
+        When I am not investigating data, I am building systems on my
+        <a href="/projects">Projects</a> page or writing analysis on my
+        <a href="/publications">Publications</a> page.
+      </p>
+    </div>
+
+    <div class="skills-section">
+      <h2>Skills & Focus Areas</h2>
+      <div class="skills-grid">
+        {skills.map(group => (
+          <div class="skill-group">
+            <h3>{group.area}</h3>
+            <ul>
+              {group.items.map(item => <li>{item}</li>)}
+            </ul>
+          </div>
+        ))}
+      </div>
+    </div>
+
+    <div class="links-section">
+      <h2>Find Me</h2>
+      <div class="link-list">
+        <a href="https://www.linkedin.com/in/jeffry-arevalo-855173261/" target="_blank" rel="noopener" class="ext-link">
+          LinkedIn ↗
+        </a>
+        <a href="https://github.com/jeffryarevalo" target="_blank" rel="noopener" class="ext-link">
+          GitHub ↗
+        </a>
+        <a href="https://public.tableau.com/app/profile/jeffry.alejandro.arevalo.jurado/vizzes" target="_blank" rel="noopener" class="ext-link">
+          Tableau ↗
+        </a>
+        <a href="https://www.youtube.com/@BodyExplained-f5b" target="_blank" rel="noopener" class="ext-link">
+          YouTube ↗
+        </a>
+        <a href="https://www.instagram.com/soulvra/" target="_blank" rel="noopener" class="ext-link">
+          Instagram ↗
+        </a>
+        <a href="mailto:jeffryarevalo@gmail.com" class="ext-link">
+          Email ↗
+        </a>
+      </div>
+    </div>
+
+  </div>
+</Base>
+
+<style>
+.about-header { margin-bottom: 2rem; }
+.about-header h1 { font-size: 2.25rem; }
+
+.bio { margin-bottom: 3rem; }
+.bio p {
+  font-size: 1.0625rem;
+  color: var(--text-secondary);
+  line-height: 1.8;
+  margin-bottom: 1.25rem;
+}
+.bio a { color: var(--text-primary); border-bottom: 1px solid var(--border-strong); }
+.bio a:hover { border-color: var(--text-primary); }
+.bio strong { color: var(--text-primary); font-weight: 500; }
+
+.skills-section { margin-bottom: 3rem; }
+.skills-section h2 { font-size: 1.5rem; margin-bottom: 1.25rem; padding-bottom: 0.75rem; border-bottom: 1px solid var(--border); }
+
+.skills-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(220px, 1fr));
+  gap: 1.25rem;
+}
+
+.skill-group {
+  background: var(--surface);
+  border: 1px solid var(--border);
+  border-radius: var(--radius);
+  padding: 1.1rem 1.25rem;
+}
+
+.skill-group h3 {
+  font-family: var(--font-sans);
+  font-size: 0.8125rem;
+  font-weight: 500;
+  color: var(--text-tertiary);
+  text-transform: uppercase;
+  letter-spacing: 0.06em;
+  margin-bottom: 0.75rem;
+}
+
+.skill-group ul { list-style: none; padding: 0; }
+.skill-group li {
+  font-size: 0.9rem;
+  color: var(--text-secondary);
+  padding: 0.2rem 0;
+  line-height: 1.5;
+}
+
+.links-section h2 { font-size: 1.5rem; margin-bottom: 1.25rem; padding-bottom: 0.75rem; border-bottom: 1px solid var(--border); }
+
+.link-list { display: flex; flex-wrap: wrap; gap: 0.75rem; }
+
+.ext-link {
+  font-size: 0.875rem;
+  padding: 0.45rem 1rem;
+  border: 1px solid var(--border);
+  border-radius: var(--radius-sm);
+  color: var(--text-secondary);
+  background: var(--surface);
+  transition: all 0.15s;
+}
+.ext-link:hover { color: var(--text-primary); border-color: var(--border-strong); }
+</style>

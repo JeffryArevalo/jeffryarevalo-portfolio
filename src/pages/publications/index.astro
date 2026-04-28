@@ -1,0 +1,67 @@
+---
+import Base from '../../layouts/Base.astro';
+import { getCollection } from 'astro:content';
+
+const allPosts = await getCollection('blog', ({ data }) => !data.draft);
+const posts = allPosts.sort((a, b) => b.data.pubDate.valueOf() - a.data.pubDate.valueOf());
+---
+
+<Base title="Publications — Jeffry Arevalo" description="Data investigations, essays, and insights on AI, economics, and the future of work.">
+  <div class="page-narrow">
+
+    <div class="page-header">
+      <h1>Publications</h1>
+      <p>Data investigations, essays, and insights on AI, economics, and the future of work.</p>
+    </div>
+
+    <div style="display:flex; flex-direction:column; gap:0.75rem;">
+      {posts.map(post => (
+        <a
+          href={post.data.externalUrl ?? `/publications/${post.id}`}
+          target={post.data.externalUrl ? '_blank' : undefined}
+          rel={post.data.externalUrl ? 'noopener noreferrer' : undefined}
+          class="blog-card"
+        >
+          <div class="blog-card-top">
+            <span class="blog-card-date">
+              {post.data.pubDate.toLocaleDateString('en-US', { year: 'numeric', month: 'long', day: 'numeric' })}
+            </span>
+            {post.data.externalUrl && <span class="external-badge">Full Investigation ↗</span>}
+          </div>
+          <h2 class="blog-card-title">{post.data.title}</h2>
+          <p class="blog-card-desc">{post.data.description}</p>
+          {post.data.tags && (
+            <div class="blog-card-tags">
+              {post.data.tags.map(tag => <span class="blog-tag">{tag}</span>)}
+            </div>
+          )}
+        </a>
+      ))}
+    </div>
+
+  </div>
+</Base>
+
+<style>
+.page-header { margin-bottom: 2.5rem; }
+.page-header h1 { font-size: 2.25rem; margin-bottom: 0.5rem; }
+.page-header p { color: var(--text-secondary); font-size: 1.0625rem; }
+
+.blog-card-top {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 1rem;
+}
+
+.external-badge {
+  font-size: 0.7rem;
+  font-weight: 500;
+  padding: 2px 8px;
+  border-radius: 999px;
+  background: var(--accent-muted);
+  color: var(--text-secondary);
+  white-space: nowrap;
+  flex-shrink: 0;
+}
+</style>

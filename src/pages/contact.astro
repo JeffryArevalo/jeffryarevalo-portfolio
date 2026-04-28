@@ -1,0 +1,129 @@
+---
+import Base from '../layouts/Base.astro';
+---
+
+<Base title="Contact — Jeffry Arevalo" description="Get in touch with Jeffry Arevalo">
+  <div class="page-narrow">
+
+    <div class="contact-header">
+      <h1>Contact</h1>
+      <p>Open to data roles, freelance projects, and interesting collaborations.</p>
+    </div>
+
+    <div class="logo-grid">
+
+      <a href="mailto:jeffryarevalo@gmail.com" class="logo-tile" aria-label="Email Jeffry Arevalo">
+        <img src="/images/logos/email.jpeg" alt="Email" class="tile-img" />
+        <span class="tile-label">Email</span>
+      </a>
+
+      <a href="https://www.linkedin.com/in/jeffry-arevalo-855173261/"
+         target="_blank" rel="noopener noreferrer"
+         class="logo-tile tile-linkedin" aria-label="LinkedIn profile">
+        <img src="/images/logos/linkedin.png" alt="LinkedIn" class="tile-img" />
+        <span class="tile-label">LinkedIn</span>
+      </a>
+
+      <a href="https://github.com/jeffryarevalo"
+         target="_blank" rel="noopener noreferrer"
+         class="logo-tile tile-github" aria-label="GitHub profile">
+        <img src="/images/logos/github.jpeg" alt="GitHub" class="tile-img" />
+        <span class="tile-label">GitHub</span>
+      </a>
+
+      <a href="https://public.tableau.com/app/profile/jeffry.alejandro.arevalo.jurado/vizzes"
+         target="_blank" rel="noopener noreferrer"
+         class="logo-tile" aria-label="Tableau Public profile">
+        <img src="/images/logos/tableau.png" alt="Tableau" class="tile-img" />
+        <span class="tile-label">Tableau</span>
+      </a>
+
+    </div>
+
+  </div>
+</Base>
+
+<style>
+.contact-header {
+  margin-bottom: 3rem;
+}
+.contact-header h1 {
+  font-size: 2.25rem;
+  margin-bottom: 0.5rem;
+}
+.contact-header p {
+  color: var(--text-secondary);
+  font-size: 1.0625rem;
+}
+
+.logo-grid {
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+  gap: 1rem;
+}
+
+.logo-tile {
+  position: relative;
+  aspect-ratio: 1 / 1;
+  background: var(--surface);
+  border: 1px solid var(--border);
+  border-radius: 14px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  overflow: hidden;
+  box-shadow: var(--shadow-card);
+  transition: border-color 0.2s, box-shadow 0.2s, transform 0.2s;
+  cursor: pointer;
+}
+
+.logo-tile:hover {
+  border-color: var(--border-strong);
+  box-shadow: var(--shadow-lift);
+  transform: translateY(-3px);
+}
+
+.tile-linkedin {
+  background: #f0f6ff;
+}
+
+.tile-github {
+  background: #f6f8fa;
+}
+
+.tile-img {
+  width: 60%;
+  height: 60%;
+  object-fit: contain;
+  display: block;
+}
+
+.tile-label {
+  position: absolute;
+  bottom: 0;
+  left: 0;
+  right: 0;
+  padding: 0.6rem;
+  text-align: center;
+  font-size: 0.75rem;
+  font-weight: 500;
+  letter-spacing: 0.06em;
+  text-transform: uppercase;
+  color: var(--text-primary);
+  background: rgba(249, 248, 246, 0.93);
+  backdrop-filter: blur(6px);
+  -webkit-backdrop-filter: blur(6px);
+  transform: translateY(100%);
+  transition: transform 0.22s ease;
+}
+
+.logo-tile:hover .tile-label {
+  transform: translateY(0);
+}
+
+@media (max-width: 640px) {
+  .logo-grid {
+    grid-template-columns: repeat(2, 1fr);
+  }
+}
+</style>

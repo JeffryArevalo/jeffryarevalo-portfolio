@@ -1,0 +1,142 @@
+---
+import Base from '../../layouts/Base.astro';
+import { getCollection } from 'astro:content';
+
+export async function getStaticPaths() {
+  const posts = await getCollection('blog', ({ data }) => !data.draft);
+  return posts.map(post => ({
+    params: { slug: post.id },
+    props: { post },
+  }));
+}
+
+const { post } = Astro.props;
+const { Content } = await post.render();
+const isExternal = !!post.data.externalUrl;
+---
+
+<Base title={`${post.data.title} — Jeffry Arevalo`} description={post.data.description}>
+
+  {isExternal ? (
+    <div class="pub-frame-wrapper">
+      <div class="pub-bar">
+        <a href="/publications" class="pub-back">← Publications</a>
+        <span class="pub-title">{post.data.title}</span>
+        <a href={post.data.externalUrl} target="_blank" rel="noopener noreferrer" class="pub-newtab">
+          Open in new tab ↗
+        </a>
+      </div>
+      <iframe
+        src={post.data.externalUrl}
+        title={post.data.title}
+        class="pub-iframe"
+        loading="lazy"
+      />
+    </div>
+  ) : (
+    <div class="page-narrow">
+
+      <a href="/publications" class="back-link">← All Publications</a>
+
+      <div class="article-header">
+        <h1 class="article-title">{post.data.title}</h1>
+        <div class="article-meta">
+          <span>
+            {post.data.pubDate.toLocaleDateString('en-US', { year: 'numeric', month: 'long', day: 'numeric' })}
+          </span>
+          {post.data.tags && post.data.tags.map(tag => (
+            <span class="blog-tag">{tag}</span>
+          ))}
+        </div>
+      </div>
+
+      <div class="article-body">
+        <Content />
+      </div>
+
+      <div class="post-footer">
+        <p>Enjoyed this? <a href="https://linkedin.com/in/jeffry-arevalo-855173261" target="_blank" rel="noopener">Share it on LinkedIn ↗</a></p>
+      </div>
+
+    </div>
+  )}
+
+</Base>
+
+<style>
+/* iframe full-page viewer */
+.pub-frame-wrapper {
+  position: fixed;
+  inset: 60px 0 0 0;
+  display: flex;
+  flex-direction: column;
+  background: #fff;
+  z-index: 50;
+}
+
+.pub-bar {
+  display: flex;
+  align-items: center;
+  padding: 0 1.5rem;
+  height: 44px;
+  border-bottom: 1px solid var(--border);
+  background: var(--surface);
+  gap: 1rem;
+  flex-shrink: 0;
+}
+
+.pub-back {
+  font-size: 0.8125rem;
+  color: var(--text-tertiary);
+  transition: color 0.15s;
+  white-space: nowrap;
+}
+.pub-back:hover { color: var(--text-primary); }
+
+.pub-title {
+  font-family: var(--font-serif);
+  font-size: 0.9375rem;
+  color: var(--text-primary);
+  flex: 1;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
+.pub-newtab {
+  font-size: 0.8125rem;
+  color: var(--text-tertiary);
+  transition: color 0.15s;
+  white-space: nowrap;
+}
+.pub-newtab:hover { color: var(--text-primary); }
+
+.pub-iframe {
+  flex: 1;
+  width: 100%;
+  border: none;
+}
+
+/* Standard article page */
+.back-link {
+  display: inline-block;
+  font-size: 0.875rem;
+  color: var(--text-tertiary);
+  margin-bottom: 2rem;
+  transition: color 0.15s;
+}
+.back-link:hover { color: var(--text-primary); }
+
+.post-footer {
+  margin-top: 3rem;
+  padding-top: 1.5rem;
+  border-top: 1px solid var(--border);
+  font-size: 0.9375rem;
+  color: var(--text-secondary);
+}
+.post-footer a {
+  color: var(--text-primary);
+  border-bottom: 1px solid var(--border-strong);
+}
+.post-footer a:hover { border-color: var(--text-primary); }
+</style>

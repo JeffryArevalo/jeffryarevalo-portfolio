@@ -1,0 +1,795 @@
+---
+import Base from '../layouts/Base.astro';
+import { getCollection } from 'astro:content';
+
+const allProjects = await getCollection('projects');
+const featuredProjects = allProjects
+  .filter(p => p.data.featured)
+  .sort((a, b) => (a.data.order ?? 99) - (b.data.order ?? 99))
+  .slice(0, 3);
+
+const allPosts = await getCollection('blog', ({ data }) => !data.draft);
+const publications = allPosts
+  .filter(p => p.data.externalUrl)
+  .sort((a, b) => b.data.pubDate.valueOf() - a.data.pubDate.valueOf());
+
+const aiRace = publications.find(p => p.id === 'ai-race');
+const kEconomy = publications.find(p => p.id === 'k-shaped-economy');
+
+const categoryClass = (cat: string) => {
+  if (cat === 'Data Analysis') return 'badge-data';
+  if (cat === 'AI / Automation') return 'badge-auto';
+  if (cat === 'Software') return 'badge-software';
+  return 'badge-viz';
+};
+---
+
+<Base title="Jeffry Arevalo — Data Journalist & Builder">
+
+  <!-- HERO -->
+  <section class="hero">
+
+    <div class="hero-dots" aria-hidden="true">
+      <span class="dot dot-1"></span>
+      <span class="dot dot-2"></span>
+      <span class="dot dot-3"></span>
+      <span class="dot dot-4"></span>
+      <span class="dot dot-5"></span>
+      <span class="dot dot-6"></span>
+      <span class="dot dot-7"></span>
+    </div>
+
+    <div class="hero-inner">
+
+      <div class="hero-text">
+        <p class="hero-eyebrow">Data Journalist · Analyst · Builder</p>
+        <h1 class="hero-headline">
+          I investigate data.<br/>
+          I build systems.<br/>
+          I publish what I find.
+        </h1>
+        <p class="hero-sub">
+          Complex information turned into clear stories and tools.
+          From in-depth data investigations to AI-powered automation,
+          I work where data, technology, and communication meet.
+        </p>
+        <div class="hero-ctas">
+          <a href="/publications" class="btn btn-primary">Read Publications</a>
+          <a href="/projects" class="btn btn-outline">View Projects</a>
+          <a href="/about" class="btn btn-ghost">About Me →</a>
+        </div>
+      </div>
+
+      <div class="hero-showcase">
+
+        <div class="hero-media">
+          <svg class="chart-line-svg" viewBox="0 0 300 80" fill="none"
+               xmlns="http://www.w3.org/2000/svg" aria-hidden="true">
+            <polyline class="chart-line"
+              points="0,70 40,55 80,60 120,30 160,35 200,15 240,20 300,5"
+              stroke="rgba(255,255,255,0.35)" stroke-width="2"
+              stroke-linecap="round" stroke-linejoin="round" fill="none"/>
+            <circle class="chart-dot chart-dot-1" cx="120" cy="30" r="3" fill="rgba(255,255,255,0.5)"/>
+            <circle class="chart-dot chart-dot-2" cx="200" cy="15" r="3" fill="rgba(255,255,255,0.5)"/>
+            <circle class="chart-dot chart-dot-3" cx="300" cy="5"  r="3" fill="rgba(255,255,255,0.5)"/>
+          </svg>
+        </div>
+
+        <div class="showcase-chip">Latest Investigation</div>
+        <div class="showcase-title">The AI Race: A Data Story</div>
+
+        <div class="showcase-stats">
+          <div class="showcase-stat">
+            <span class="stat-num" data-target="2.52" data-suffix="T" data-prefix="$">$2.52T</span>
+            <span class="stat-label">Global AI Spend</span>
+          </div>
+          <div class="showcase-stat">
+            <span class="stat-num" data-target="81" data-suffix="%">81%</span>
+            <span class="stat-label">VC into AI</span>
+          </div>
+          <div class="showcase-stat">
+            <span class="stat-num" data-target="300" data-suffix="M">300M</span>
+            <span class="stat-label">Jobs at Risk</span>
+          </div>
+        </div>
+
+        <p class="showcase-desc">
+          Who is really building artificial intelligence, what it is costing society,
+          and where ordinary people stand in a race nobody asked for.
+        </p>
+        <a href="/publications/ai-race" class="showcase-link">
+          Read the Investigation ↗
+        </a>
+
+      </div>
+
+    </div>
+  </section>
+
+  <!-- FEATURED PUBLICATIONS -->
+  <section class="pub-section" data-animate-section>
+    <div class="section-inner">
+      <div class="section-label-row">
+        <span class="section-label">Publications</span>
+        <a href="/publications" class="see-all">See all →</a>
+      </div>
+
+      <div class="pub-grid">
+
+        {aiRace && (
+          <a href="/publications/ai-race" class="pub-card pub-card-dark" data-animate-item>
+            <div class="pub-card-img pub-card-img-dark">
+              <img src="/images/pub-ai-race.jpg" alt="The AI Race" class="pub-img" onerror="this.style.display='none'" />
+              <div class="pub-card-tags">
+                {aiRace.data.tags?.slice(0, 2).map(t => <span class="pub-tag pub-tag-light">{t}</span>)}
+              </div>
+            </div>
+            <div class="pub-card-body">
+              <p class="pub-card-date">
+                {aiRace.data.pubDate.toLocaleDateString('en-US', { year: 'numeric', month: 'long' })}
+              </p>
+              <h2 class="pub-card-title">{aiRace.data.title}</h2>
+              <p class="pub-card-desc">{aiRace.data.description}</p>
+              <span class="pub-card-cta">Read Investigation ↗</span>
+            </div>
+          </a>
+        )}
+
+        {kEconomy && (
+          <a href="/publications/k-shaped-economy" class="pub-card pub-card-light" data-animate-item>
+            <div class="pub-card-img pub-card-img-light">
+              <img src="/images/pub-k-economy.jpg" alt="The K-Shaped Economy" class="pub-img" onerror="this.style.display='none'" />
+              <div class="pub-card-tags">
+                {kEconomy.data.tags?.slice(0, 2).map(t => <span class="pub-tag pub-tag-dark">{t}</span>)}
+              </div>
+            </div>
+            <div class="pub-card-body">
+              <p class="pub-card-date">
+                {kEconomy.data.pubDate.toLocaleDateString('en-US', { year: 'numeric', month: 'long' })}
+              </p>
+              <h2 class="pub-card-title pub-card-title-dark">{kEconomy.data.title}</h2>
+              <p class="pub-card-desc pub-card-desc-dark">{kEconomy.data.description}</p>
+              <span class="pub-card-cta pub-card-cta-dark">Read Investigation ↗</span>
+            </div>
+          </a>
+        )}
+
+      </div>
+    </div>
+  </section>
+
+  <!-- PLATFORMS -->
+  <section class="platforms-section" data-animate-section>
+    <div class="section-inner">
+      <div class="section-label-row">
+        <span class="section-label">Content & Platforms</span>
+        <a href="/content" class="see-all">See more →</a>
+      </div>
+
+      <div class="platforms-row">
+
+        <a href="https://public.tableau.com/app/profile/jeffry.alejandro.arevalo.jurado/vizzes"
+           target="_blank" rel="noopener noreferrer"
+           class="platform-pill" data-animate-item>
+          <div class="platform-pill-icon">
+            <svg width="16" height="16" viewBox="0 0 24 24" fill="none">
+              <rect x="3" y="3" width="18" height="18" rx="2" stroke="currentColor" stroke-width="1.5"/>
+              <path d="M8 16V11M12 16V8M16 16V13" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"/>
+            </svg>
+          </div>
+          <div class="platform-pill-text">
+            <span class="platform-pill-name">Tableau Public</span>
+            <span class="platform-pill-sub">Data visualizations</span>
+          </div>
+          <span class="platform-pill-arrow">↗</span>
+        </a>
+
+        <a href="https://www.youtube.com/@BodyExplained-f5b"
+           target="_blank" rel="noopener noreferrer"
+           class="platform-pill" data-animate-item>
+          <div class="platform-pill-icon">
+            <svg width="16" height="16" viewBox="0 0 24 24" fill="none">
+              <rect x="2" y="5" width="20" height="14" rx="4" stroke="currentColor" stroke-width="1.5"/>
+              <path d="M10 9.5l5 2.5-5 2.5V9.5z" fill="currentColor"/>
+            </svg>
+          </div>
+          <div class="platform-pill-text">
+            <span class="platform-pill-name">YouTube</span>
+            <span class="platform-pill-sub">@BodyExplained-f5b</span>
+          </div>
+          <span class="platform-pill-arrow">↗</span>
+        </a>
+
+        <a href="https://www.instagram.com/soulvra/"
+           target="_blank" rel="noopener noreferrer"
+           class="platform-pill" data-animate-item>
+          <div class="platform-pill-icon">
+            <svg width="16" height="16" viewBox="0 0 24 24" fill="none">
+              <rect x="2" y="2" width="20" height="20" rx="5" stroke="currentColor" stroke-width="1.5"/>
+              <circle cx="12" cy="12" r="4" stroke="currentColor" stroke-width="1.5"/>
+              <circle cx="17.5" cy="6.5" r="1" fill="currentColor"/>
+            </svg>
+          </div>
+          <div class="platform-pill-text">
+            <span class="platform-pill-name">Instagram</span>
+            <span class="platform-pill-sub">@soulvra</span>
+          </div>
+          <span class="platform-pill-arrow">↗</span>
+        </a>
+
+      </div>
+    </div>
+  </section>
+
+  <!-- FEATURED PROJECTS -->
+  {featuredProjects.length > 0 && (
+    <section class="projects-section" data-animate-section>
+      <div class="section-inner">
+        <div class="section-label-row">
+          <span class="section-label">Featured Projects</span>
+          <a href="/projects" class="see-all">See all →</a>
+        </div>
+        <div class="cards-grid">
+          {featuredProjects.map(project => (
+            <a href={`/projects/${project.id}`} class="project-card" data-animate-item>
+              <div style="display:flex; align-items:center; justify-content:space-between; margin-bottom:0.25rem;">
+                <span class={`category-badge ${categoryClass(project.data.category)}`}>
+                  {project.data.category}
+                </span>
+              </div>
+              <h3 class="project-card-title">{project.data.title}</h3>
+              <p class="project-card-desc">{project.data.description}</p>
+              <div class="project-card-footer">
+                <div class="tools-list">
+                  {project.data.tools.slice(0, 3).map(tool => (
+                    <span class="tool-tag">{tool}</span>
+                  ))}
+                </div>
+                <div class="card-links">
+                  {project.data.links?.github && <span class="card-link">GitHub ↗</span>}
+                  {project.data.links?.tableau && <span class="card-link">Tableau ↗</span>}
+                  {project.data.links?.live && <span class="card-link">Live ↗</span>}
+                </div>
+              </div>
+            </a>
+          ))}
+        </div>
+      </div>
+    </section>
+  )}
+
+</Base>
+
+<style>
+/* ── Shared layout ─────────────────────────────────────────── */
+.section-inner {
+  max-width: var(--max-width);
+  margin: 0 auto;
+  padding: 0 2rem;
+}
+
+.section-label-row {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  margin-bottom: 1.75rem;
+  padding-bottom: 0.75rem;
+  border-bottom: 1px solid var(--border);
+}
+
+.section-label {
+  font-size: 0.75rem;
+  font-weight: 500;
+  text-transform: uppercase;
+  letter-spacing: 0.08em;
+  color: var(--text-tertiary);
+}
+
+/* ── Hero ──────────────────────────────────────────────────── */
+.hero {
+  background: var(--surface);
+  border-bottom: 1px solid var(--border);
+  padding: 0 2rem;
+  min-height: 88vh;
+  display: flex;
+  align-items: center;
+  position: relative;
+  overflow: hidden;
+}
+
+/* Pulsing data-point dots in the hero background */
+.hero-dots {
+  position: absolute;
+  inset: 0;
+  pointer-events: none;
+  overflow: hidden;
+}
+
+.dot {
+  position: absolute;
+  border-radius: 50%;
+  background: rgba(17, 17, 16, 0.07);
+  animation: pulse-dot 4s ease-in-out infinite;
+}
+
+.dot-1 { width: 7px;  height: 7px;  top: 18%; left: 6%;  animation-delay: 0s; }
+.dot-2 { width: 4px;  height: 4px;  top: 52%; left: 14%; animation-delay: 0.7s; }
+.dot-3 { width: 9px;  height: 9px;  top: 72%; left: 22%; animation-delay: 1.4s; }
+.dot-4 { width: 5px;  height: 5px;  top: 30%; left: 40%; animation-delay: 2.1s; }
+.dot-5 { width: 6px;  height: 6px;  top: 82%; left: 55%; animation-delay: 0.4s; }
+.dot-6 { width: 4px;  height: 4px;  top: 12%; left: 78%; animation-delay: 1.8s; }
+.dot-7 { width: 8px;  height: 8px;  top: 62%; left: 88%; animation-delay: 2.8s; }
+
+@keyframes pulse-dot {
+  0%, 100% { opacity: 0.25; transform: scale(1); }
+  50%       { opacity: 0.85; transform: scale(1.7); }
+}
+
+.hero-inner {
+  max-width: var(--max-width);
+  margin: 0 auto;
+  width: 100%;
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 5rem;
+  align-items: center;
+  padding: 5rem 0;
+}
+
+.hero-eyebrow {
+  font-size: 0.8125rem;
+  font-weight: 500;
+  text-transform: uppercase;
+  letter-spacing: 0.1em;
+  color: var(--text-tertiary);
+  margin-bottom: 1.5rem;
+}
+
+.hero-headline {
+  font-size: clamp(2.25rem, 4.5vw, 3.5rem);
+  line-height: 1.1;
+  color: var(--text-primary);
+  margin-bottom: 1.5rem;
+  letter-spacing: -0.02em;
+}
+
+.hero-sub {
+  font-size: 1.0625rem;
+  color: var(--text-secondary);
+  line-height: 1.75;
+  max-width: 460px;
+  margin-bottom: 2.25rem;
+}
+
+.hero-ctas {
+  display: flex;
+  align-items: center;
+  gap: 0.75rem;
+  flex-wrap: wrap;
+}
+
+.btn-ghost {
+  font-size: 0.875rem;
+  color: var(--text-secondary);
+  padding: 0.6rem 0.5rem;
+  transition: color 0.15s;
+  font-family: var(--font-sans);
+}
+.btn-ghost:hover { color: var(--text-primary); }
+
+/* Hero showcase card */
+.hero-showcase {
+  background: var(--text-primary);
+  border-radius: 14px;
+  padding: 0 2rem 2rem;
+  color: #f9f8f6;
+  display: flex;
+  flex-direction: column;
+  gap: 1.25rem;
+  animation: fadeUp 0.7s ease both;
+  animation-delay: 0.2s;
+  overflow: hidden;
+}
+
+/* Hero media — animated SVG chart placeholder (replaced by video later) */
+.hero-media {
+  width: calc(100% + 4rem);
+  margin-left: -2rem;
+  height: 150px;
+  background: rgba(255, 255, 255, 0.04);
+  border-bottom: 1px solid rgba(255, 255, 255, 0.08);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  overflow: hidden;
+  flex-shrink: 0;
+}
+
+.chart-line-svg {
+  width: 100%;
+  height: 100%;
+  padding: 1rem 1.5rem;
+}
+
+.chart-line {
+  stroke-dasharray: 650;
+  stroke-dashoffset: 650;
+  animation: draw-line 2.2s cubic-bezier(0.4, 0, 0.2, 1) forwards;
+  animation-delay: 0.8s;
+}
+
+@keyframes draw-line {
+  to { stroke-dashoffset: 0; }
+}
+
+.chart-dot {
+  opacity: 0;
+  animation: dot-appear 0.3s ease forwards;
+}
+.chart-dot-1 { animation-delay: 1.5s; }
+.chart-dot-2 { animation-delay: 1.9s; }
+.chart-dot-3 { animation-delay: 2.2s; }
+
+@keyframes dot-appear {
+  to { opacity: 1; }
+}
+
+.showcase-chip {
+  display: inline-block;
+  font-size: 0.7rem;
+  font-weight: 500;
+  text-transform: uppercase;
+  letter-spacing: 0.1em;
+  padding: 3px 10px;
+  border-radius: 999px;
+  border: 1px solid rgba(255, 255, 255, 0.2);
+  color: rgba(255, 255, 255, 0.6);
+  align-self: flex-start;
+  margin-top: 0.25rem;
+}
+
+.showcase-title {
+  font-family: var(--font-serif);
+  font-size: 1.5rem;
+  color: #f9f8f6;
+  line-height: 1.25;
+}
+
+.showcase-stats {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 0.75rem;
+  padding: 1.25rem 0;
+  border-top: 1px solid rgba(255, 255, 255, 0.1);
+  border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+}
+
+.showcase-stat {
+  display: flex;
+  flex-direction: column;
+  gap: 0.25rem;
+  background: rgba(255, 255, 255, 0.04);
+  border-radius: 8px;
+  padding: 0.6rem 0.5rem;
+}
+
+.stat-num {
+  font-family: var(--font-serif);
+  font-size: 1.5rem;
+  color: #f9f8f6;
+  line-height: 1;
+}
+
+.stat-label {
+  font-size: 0.7rem;
+  color: rgba(255, 255, 255, 0.5);
+  line-height: 1.3;
+}
+
+.showcase-desc {
+  font-size: 0.875rem;
+  color: rgba(255, 255, 255, 0.6);
+  line-height: 1.65;
+}
+
+.showcase-link {
+  font-size: 0.875rem;
+  font-weight: 500;
+  color: #f9f8f6;
+  border-bottom: 1px solid rgba(255, 255, 255, 0.3);
+  padding-bottom: 2px;
+  align-self: flex-start;
+  transition: border-color 0.15s;
+}
+.showcase-link:hover { border-color: rgba(255, 255, 255, 0.8); }
+
+/* ── Publications ─────────────────────────────────────────── */
+.pub-section {
+  padding: 5rem 0;
+  background: var(--bg);
+}
+
+.pub-grid {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 1.25rem;
+}
+
+.pub-card {
+  border-radius: 14px;
+  overflow: hidden;
+  display: flex;
+  flex-direction: column;
+  transition: transform 0.2s, box-shadow 0.2s;
+  box-shadow: var(--shadow-card);
+}
+.pub-card:hover {
+  transform: translateY(-3px);
+  box-shadow: var(--shadow-lift);
+}
+
+.pub-card-dark { background: var(--text-primary); }
+.pub-card-light { background: var(--surface); border: 1px solid var(--border); }
+
+.pub-card-img {
+  position: relative;
+  height: 200px;
+  overflow: hidden;
+  flex-shrink: 0;
+}
+.pub-card-img-dark { background: linear-gradient(135deg, #1e1e1c 0%, #2d2d2a 100%); }
+.pub-card-img-light { background: linear-gradient(135deg, #efecea 0%, #e5e2db 100%); }
+
+.pub-img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  display: block;
+}
+
+.pub-card-tags {
+  position: absolute;
+  bottom: 1rem;
+  left: 1rem;
+  display: flex;
+  gap: 0.4rem;
+}
+
+.pub-tag {
+  font-size: 0.675rem;
+  font-weight: 500;
+  padding: 2px 8px;
+  border-radius: 999px;
+}
+.pub-tag-light { background: rgba(255, 255, 255, 0.15); color: rgba(255, 255, 255, 0.85); }
+.pub-tag-dark  { background: rgba(17, 17, 16, 0.08);   color: var(--text-secondary); }
+
+.pub-card-body {
+  padding: 1.5rem;
+  display: flex;
+  flex-direction: column;
+  gap: 0.6rem;
+  flex: 1;
+}
+
+.pub-card-date { font-size: 0.75rem; color: rgba(255, 255, 255, 0.4); }
+.pub-card-light .pub-card-date { color: var(--text-tertiary); }
+
+.pub-card-title {
+  font-family: var(--font-serif);
+  font-size: 1.35rem;
+  color: #f9f8f6;
+  line-height: 1.25;
+}
+.pub-card-title-dark { color: var(--text-primary); }
+
+.pub-card-desc {
+  font-size: 0.875rem;
+  color: rgba(255, 255, 255, 0.55);
+  line-height: 1.65;
+  flex: 1;
+}
+.pub-card-desc-dark { color: var(--text-secondary); }
+
+.pub-card-cta {
+  font-size: 0.8125rem;
+  font-weight: 500;
+  color: rgba(255, 255, 255, 0.7);
+  margin-top: 0.5rem;
+  transition: color 0.15s;
+}
+.pub-card-cta-dark { color: var(--text-secondary); }
+.pub-card:hover .pub-card-cta { color: #f9f8f6; }
+.pub-card-light:hover .pub-card-cta-dark { color: var(--text-primary); }
+
+/* ── Platforms ────────────────────────────────────────────── */
+.platforms-section {
+  padding: 0 0 5rem;
+  background: var(--bg);
+}
+
+.platforms-row {
+  display: flex;
+  flex-direction: column;
+  gap: 0.6rem;
+}
+
+.platform-pill {
+  display: flex;
+  align-items: center;
+  gap: 1rem;
+  background: var(--surface);
+  border: 1px solid var(--border);
+  border-radius: var(--radius);
+  padding: 1rem 1.25rem;
+  box-shadow: var(--shadow-card);
+  transition: border-color 0.15s, box-shadow 0.15s;
+  position: relative;
+}
+.platform-pill::before {
+  content: '';
+  position: absolute;
+  left: 0;
+  top: 20%;
+  bottom: 20%;
+  width: 2px;
+  border-radius: 2px;
+  background: var(--text-primary);
+  opacity: 0;
+  transition: opacity 0.2s;
+}
+.platform-pill:hover {
+  border-color: var(--border-strong);
+  box-shadow: var(--shadow-card-hover);
+}
+.platform-pill:hover::before { opacity: 1; }
+
+.platform-pill-icon {
+  width: 38px;
+  height: 38px;
+  border-radius: var(--radius-sm);
+  border: 1px solid var(--border);
+  background: var(--accent-muted);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  color: var(--text-secondary);
+  flex-shrink: 0;
+}
+
+.platform-pill-text {
+  display: flex;
+  flex-direction: column;
+  gap: 0.15rem;
+  flex: 1;
+}
+
+.platform-pill-name {
+  font-size: 0.9375rem;
+  color: var(--text-primary);
+  font-weight: 400;
+}
+
+.platform-pill-sub {
+  font-size: 0.8125rem;
+  color: var(--text-tertiary);
+}
+
+.platform-pill-arrow {
+  color: var(--text-tertiary);
+  font-size: 1rem;
+  transition: color 0.15s;
+}
+.platform-pill:hover .platform-pill-arrow { color: var(--text-primary); }
+
+/* ── Projects ─────────────────────────────────────────────── */
+.projects-section {
+  padding: 0 0 6rem;
+  background: var(--bg);
+}
+
+/* ── Scroll-reveal ─────────────────────────────────────────── */
+[data-animate-item] {
+  opacity: 0;
+  transform: translateY(22px);
+  transition: opacity 0.55s ease, transform 0.55s ease;
+}
+
+[data-animate-item].is-visible {
+  opacity: 1;
+  transform: translateY(0);
+}
+
+/* ── Entry animations ─────────────────────────────────────── */
+@keyframes fadeUp {
+  from { opacity: 0; transform: translateY(16px); }
+  to   { opacity: 1; transform: translateY(0); }
+}
+
+.hero-text {
+  animation: fadeUp 0.6s ease both;
+}
+
+.hero-showcase {
+  animation: fadeUp 0.6s ease both;
+  animation-delay: 0.15s;
+}
+
+/* ── Responsive ───────────────────────────────────────────── */
+@media (max-width: 900px) {
+  .hero-inner {
+    grid-template-columns: 1fr;
+    gap: 3rem;
+    padding: 4rem 0;
+  }
+  .hero { min-height: auto; }
+  .pub-grid { grid-template-columns: 1fr; }
+  .showcase-stats { grid-template-columns: repeat(3, 1fr); }
+}
+
+@media (max-width: 640px) {
+  .hero-ctas { flex-direction: column; align-items: flex-start; }
+  .section-inner { padding: 0 1.25rem; }
+  .pub-section, .platforms-section { padding-top: 3.5rem; padding-bottom: 3.5rem; }
+}
+</style>
+
+<script>
+  // Scroll-triggered entrance animations
+  const observer = new IntersectionObserver(
+    (entries) => {
+      entries.forEach((entry) => {
+        if (!entry.isIntersecting) return;
+
+        const items = entry.target.querySelectorAll('[data-animate-item]');
+        items.forEach((el, i) => {
+          setTimeout(() => el.classList.add('is-visible'), i * 90);
+        });
+
+        if (entry.target.classList.contains('hero')) {
+          startCounters();
+        }
+
+        observer.unobserve(entry.target);
+      });
+    },
+    { threshold: 0.12 }
+  );
+
+  document.querySelectorAll('[data-animate-section]').forEach((s) => observer.observe(s));
+
+  const heroEl = document.querySelector('.hero');
+  if (heroEl) observer.observe(heroEl);
+
+  // Animated number counters
+  let countersStarted = false;
+
+  function startCounters() {
+    if (countersStarted) return;
+    countersStarted = true;
+
+    document.querySelectorAll<HTMLElement>('.stat-num[data-target]').forEach((el) => {
+      const target = parseFloat(el.dataset.target ?? '0');
+      const prefix = el.dataset.prefix ?? '';
+      const suffix = el.dataset.suffix ?? '';
+      const isDecimal = (el.dataset.target ?? '').includes('.');
+      const steps = 50;
+      const stepTime = 1400 / steps;
+      let step = 0;
+
+      const timer = setInterval(() => {
+        step++;
+        const progress = 1 - Math.pow(1 - step / steps, 3);
+        const current = target * progress;
+        el.textContent =
+          prefix + (isDecimal ? current.toFixed(2) : String(Math.round(current))) + suffix;
+
+        if (step >= steps) {
+          clearInterval(timer);
+          el.textContent =
+            prefix + (isDecimal ? target.toFixed(2) : String(target)) + suffix;
+        }
+      }, stepTime);
+    });
+  }
+</script>
