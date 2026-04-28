@@ -29,24 +29,22 @@ const categoryClass = (cat: string) => {
   <!-- HERO -->
   <section class="hero">
 
-    <div class="hero-dots" aria-hidden="true">
-      <span class="dot dot-1"></span>
-      <span class="dot dot-2"></span>
-      <span class="dot dot-3"></span>
-      <span class="dot dot-4"></span>
-      <span class="dot dot-5"></span>
-      <span class="dot dot-6"></span>
-      <span class="dot dot-7"></span>
-    </div>
+    <!-- Animated grid overlay -->
+    <div class="hero-grid" aria-hidden="true"></div>
+
+    <!-- Radial glow -->
+    <div class="hero-glow" aria-hidden="true"></div>
 
     <div class="hero-inner">
 
       <div class="hero-text">
         <p class="hero-eyebrow">Data Journalist · Analyst · Builder</p>
         <h1 class="hero-headline">
-          I investigate data.<br/>
+          I investigate<br/>
+          <span class="hero-accent">data.</span><br/>
           I build systems.<br/>
-          I publish what I find.
+          I publish what<br/>
+          I find.
         </h1>
         <p class="hero-sub">
           Complex information turned into clear stories and tools.
@@ -63,16 +61,9 @@ const categoryClass = (cat: string) => {
       <div class="hero-showcase">
 
         <div class="hero-media">
-          <svg class="chart-line-svg" viewBox="0 0 300 80" fill="none"
-               xmlns="http://www.w3.org/2000/svg" aria-hidden="true">
-            <polyline class="chart-line"
-              points="0,70 40,55 80,60 120,30 160,35 200,15 240,20 300,5"
-              stroke="rgba(255,255,255,0.35)" stroke-width="2"
-              stroke-linecap="round" stroke-linejoin="round" fill="none"/>
-            <circle class="chart-dot chart-dot-1" cx="120" cy="30" r="3" fill="rgba(255,255,255,0.5)"/>
-            <circle class="chart-dot chart-dot-2" cx="200" cy="15" r="3" fill="rgba(255,255,255,0.5)"/>
-            <circle class="chart-dot chart-dot-3" cx="300" cy="5"  r="3" fill="rgba(255,255,255,0.5)"/>
-          </svg>
+          <video class="hero-video" autoplay loop muted playsinline poster="/images/pub-ai-race.jpg">
+            <source src="/images/hero-animation.mp4" type="video/mp4" />
+          </video>
         </div>
 
         <div class="showcase-chip">Latest Investigation</div>
@@ -287,42 +278,43 @@ const categoryClass = (cat: string) => {
 
 /* ── Hero ──────────────────────────────────────────────────── */
 .hero {
-  background: var(--surface);
-  border-bottom: 1px solid var(--border);
+  background: #080808;
   padding: 0 2rem;
-  min-height: 88vh;
+  min-height: 100vh;
   display: flex;
-  align-items: center;
+  align-items: flex-start;
   position: relative;
   overflow: hidden;
 }
 
-/* Pulsing data-point dots in the hero background */
-.hero-dots {
+/* Animated grid — matches AI Race hero technique */
+.hero-grid {
   position: absolute;
   inset: 0;
+  background-image:
+    linear-gradient(rgba(200, 57, 43, 0.04) 1px, transparent 1px),
+    linear-gradient(90deg, rgba(200, 57, 43, 0.04) 1px, transparent 1px);
+  background-size: 60px 60px;
+  animation: gridPulse 8s ease-in-out infinite;
   pointer-events: none;
-  overflow: hidden;
 }
 
-.dot {
+@keyframes gridPulse {
+  0%, 100% { opacity: 0.4; }
+  50%       { opacity: 1; }
+}
+
+/* Radial glow behind left text */
+.hero-glow {
   position: absolute;
+  width: 700px;
+  height: 700px;
   border-radius: 50%;
-  background: rgba(17, 17, 16, 0.07);
-  animation: pulse-dot 4s ease-in-out infinite;
-}
-
-.dot-1 { width: 7px;  height: 7px;  top: 18%; left: 6%;  animation-delay: 0s; }
-.dot-2 { width: 4px;  height: 4px;  top: 52%; left: 14%; animation-delay: 0.7s; }
-.dot-3 { width: 9px;  height: 9px;  top: 72%; left: 22%; animation-delay: 1.4s; }
-.dot-4 { width: 5px;  height: 5px;  top: 30%; left: 40%; animation-delay: 2.1s; }
-.dot-5 { width: 6px;  height: 6px;  top: 82%; left: 55%; animation-delay: 0.4s; }
-.dot-6 { width: 4px;  height: 4px;  top: 12%; left: 78%; animation-delay: 1.8s; }
-.dot-7 { width: 8px;  height: 8px;  top: 62%; left: 88%; animation-delay: 2.8s; }
-
-@keyframes pulse-dot {
-  0%, 100% { opacity: 0.25; transform: scale(1); }
-  50%       { opacity: 0.85; transform: scale(1.7); }
+  background: radial-gradient(ellipse, rgba(200, 57, 43, 0.07) 0%, transparent 70%);
+  top: 50%;
+  left: -10%;
+  transform: translateY(-50%);
+  pointer-events: none;
 }
 
 .hero-inner {
@@ -332,33 +324,42 @@ const categoryClass = (cat: string) => {
   display: grid;
   grid-template-columns: 1fr 1fr;
   gap: 5rem;
-  align-items: center;
-  padding: 5rem 0;
+  align-items: start;
+  padding: clamp(3rem, 7vh, 4.5rem) 0 5rem;
+  position: relative;
+  z-index: 1;
 }
 
 .hero-eyebrow {
-  font-size: 0.8125rem;
-  font-weight: 500;
+  font-size: 0.75rem;
+  font-weight: 400;
   text-transform: uppercase;
-  letter-spacing: 0.1em;
-  color: var(--text-tertiary);
-  margin-bottom: 1.5rem;
+  letter-spacing: 0.15em;
+  color: #c8392b;
+  margin-bottom: 1.75rem;
+  font-family: var(--font-sans);
 }
 
 .hero-headline {
-  font-size: clamp(2.25rem, 4.5vw, 3.5rem);
-  line-height: 1.1;
-  color: var(--text-primary);
-  margin-bottom: 1.5rem;
+  font-family: var(--font-serif);
+  font-size: clamp(2.75rem, 5.5vw, 4.5rem);
+  line-height: 1.05;
+  color: #f0ece4;
+  margin-bottom: 1.75rem;
   letter-spacing: -0.02em;
 }
 
+.hero-accent {
+  color: #c8392b;
+  font-style: italic;
+}
+
 .hero-sub {
-  font-size: 1.0625rem;
-  color: var(--text-secondary);
-  line-height: 1.75;
-  max-width: 460px;
-  margin-bottom: 2.25rem;
+  font-size: 1rem;
+  color: #7a7570;
+  line-height: 1.8;
+  max-width: 420px;
+  margin-bottom: 2.5rem;
 }
 
 .hero-ctas {
@@ -370,7 +371,7 @@ const categoryClass = (cat: string) => {
 
 .btn-ghost {
   font-size: 0.875rem;
-  color: var(--text-secondary);
+  color: var(--text-tertiary);
   padding: 0.6rem 0.5rem;
   transition: color 0.15s;
   font-family: var(--font-sans);
@@ -379,10 +380,11 @@ const categoryClass = (cat: string) => {
 
 /* Hero showcase card */
 .hero-showcase {
-  background: var(--text-primary);
+  background: #0f0f0f;
+  border: 1px solid #1e1e1e;
   border-radius: 14px;
   padding: 0 2rem 2rem;
-  color: #f9f8f6;
+  color: #f0ece4;
   display: flex;
   flex-direction: column;
   gap: 1.25rem;
@@ -391,59 +393,49 @@ const categoryClass = (cat: string) => {
   overflow: hidden;
 }
 
-/* Hero media — animated SVG chart placeholder (replaced by video later) */
+/* Hero media: Google Flow animation */
 .hero-media {
   width: calc(100% + 4rem);
   margin-left: -2rem;
-  height: 150px;
-  background: rgba(255, 255, 255, 0.04);
-  border-bottom: 1px solid rgba(255, 255, 255, 0.08);
-  display: flex;
-  align-items: center;
-  justify-content: center;
+  height: 200px;
+  background: #080808;
+  border-bottom: 1px solid #1e1e1e;
   overflow: hidden;
   flex-shrink: 0;
+  position: relative;
 }
 
-.chart-line-svg {
+/* Gradient overlay darkens the video so it doesn't overpower the card */
+.hero-media::after {
+  content: '';
+  position: absolute;
+  inset: 0;
+  background: linear-gradient(
+    to bottom,
+    rgba(8, 8, 8, 0.25) 0%,
+    rgba(8, 8, 8, 0.55) 100%
+  );
+  pointer-events: none;
+}
+
+.hero-video {
   width: 100%;
   height: 100%;
-  padding: 1rem 1.5rem;
-}
-
-.chart-line {
-  stroke-dasharray: 650;
-  stroke-dashoffset: 650;
-  animation: draw-line 2.2s cubic-bezier(0.4, 0, 0.2, 1) forwards;
-  animation-delay: 0.8s;
-}
-
-@keyframes draw-line {
-  to { stroke-dashoffset: 0; }
-}
-
-.chart-dot {
-  opacity: 0;
-  animation: dot-appear 0.3s ease forwards;
-}
-.chart-dot-1 { animation-delay: 1.5s; }
-.chart-dot-2 { animation-delay: 1.9s; }
-.chart-dot-3 { animation-delay: 2.2s; }
-
-@keyframes dot-appear {
-  to { opacity: 1; }
+  object-fit: cover;
+  display: block;
+  opacity: 0.65;
 }
 
 .showcase-chip {
   display: inline-block;
-  font-size: 0.7rem;
+  font-size: 0.675rem;
   font-weight: 500;
   text-transform: uppercase;
-  letter-spacing: 0.1em;
+  letter-spacing: 0.12em;
   padding: 3px 10px;
   border-radius: 999px;
-  border: 1px solid rgba(255, 255, 255, 0.2);
-  color: rgba(255, 255, 255, 0.6);
+  border: 1px solid #c8392b;
+  color: #c8392b;
   align-self: flex-start;
   margin-top: 0.25rem;
 }
@@ -451,62 +443,63 @@ const categoryClass = (cat: string) => {
 .showcase-title {
   font-family: var(--font-serif);
   font-size: 1.5rem;
-  color: #f9f8f6;
+  color: #f0ece4;
   line-height: 1.25;
 }
 
 .showcase-stats {
   display: grid;
   grid-template-columns: repeat(3, 1fr);
-  gap: 0.75rem;
+  gap: 0.5rem;
   padding: 1.25rem 0;
-  border-top: 1px solid rgba(255, 255, 255, 0.1);
-  border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+  border-top: 1px solid #1e1e1e;
+  border-bottom: 1px solid #1e1e1e;
 }
 
 .showcase-stat {
   display: flex;
   flex-direction: column;
-  gap: 0.25rem;
-  background: rgba(255, 255, 255, 0.04);
+  gap: 0.3rem;
+  background: rgba(200, 57, 43, 0.06);
   border-radius: 8px;
-  padding: 0.6rem 0.5rem;
+  padding: 0.7rem 0.6rem;
 }
 
 .stat-num {
   font-family: var(--font-serif);
-  font-size: 1.5rem;
-  color: #f9f8f6;
+  font-size: 1.4rem;
+  color: #f0ece4;
   line-height: 1;
 }
 
 .stat-label {
-  font-size: 0.7rem;
-  color: rgba(255, 255, 255, 0.5);
+  font-size: 0.675rem;
+  color: #7a7570;
   line-height: 1.3;
+  text-transform: uppercase;
+  letter-spacing: 0.04em;
 }
 
 .showcase-desc {
   font-size: 0.875rem;
-  color: rgba(255, 255, 255, 0.6);
-  line-height: 1.65;
+  color: #7a7570;
+  line-height: 1.7;
 }
 
 .showcase-link {
   font-size: 0.875rem;
   font-weight: 500;
-  color: #f9f8f6;
-  border-bottom: 1px solid rgba(255, 255, 255, 0.3);
+  color: #c8392b;
+  border-bottom: 1px solid rgba(200, 57, 43, 0.3);
   padding-bottom: 2px;
   align-self: flex-start;
-  transition: border-color 0.15s;
+  transition: border-color 0.15s, color 0.15s;
 }
-.showcase-link:hover { border-color: rgba(255, 255, 255, 0.8); }
+.showcase-link:hover { color: #e84234; border-color: #c8392b; }
 
 /* ── Publications ─────────────────────────────────────────── */
 .pub-section {
   padding: 5rem 0;
-  background: var(--bg);
 }
 
 .pub-grid {
@@ -515,36 +508,43 @@ const categoryClass = (cat: string) => {
   gap: 1.25rem;
 }
 
+/* Both cards share the same dark surface — no jarring contrast between them */
 .pub-card {
+  background: var(--surface);
+  border: 1px solid var(--border);
   border-radius: 14px;
   overflow: hidden;
   display: flex;
   flex-direction: column;
-  transition: transform 0.2s, box-shadow 0.2s;
+  transition: transform 0.2s, box-shadow 0.2s, border-color 0.2s;
   box-shadow: var(--shadow-card);
 }
 .pub-card:hover {
   transform: translateY(-3px);
+  border-color: var(--border-strong);
   box-shadow: var(--shadow-lift);
 }
 
-.pub-card-dark { background: var(--text-primary); }
-.pub-card-light { background: var(--surface); border: 1px solid var(--border); }
+/* Modifier classes kept for HTML compatibility but visually unified */
+.pub-card-dark {}
+.pub-card-light {}
 
 .pub-card-img {
   position: relative;
   height: 200px;
   overflow: hidden;
   flex-shrink: 0;
+  background: #0a0a09;
 }
-.pub-card-img-dark { background: linear-gradient(135deg, #1e1e1c 0%, #2d2d2a 100%); }
-.pub-card-img-light { background: linear-gradient(135deg, #efecea 0%, #e5e2db 100%); }
+.pub-card-img-dark { background: linear-gradient(135deg, #141412 0%, #1e1e1c 100%); }
+.pub-card-img-light { background: linear-gradient(135deg, #141412 0%, #1e1e1c 100%); }
 
 .pub-img {
   width: 100%;
   height: 100%;
   object-fit: cover;
   display: block;
+  opacity: 0.85;
 }
 
 .pub-card-tags {
@@ -560,9 +560,11 @@ const categoryClass = (cat: string) => {
   font-weight: 500;
   padding: 2px 8px;
   border-radius: 999px;
+  background: rgba(255, 255, 255, 0.12);
+  color: rgba(255, 255, 255, 0.75);
 }
-.pub-tag-light { background: rgba(255, 255, 255, 0.15); color: rgba(255, 255, 255, 0.85); }
-.pub-tag-dark  { background: rgba(17, 17, 16, 0.08);   color: var(--text-secondary); }
+.pub-tag-light { background: rgba(255,255,255,0.12); color: rgba(255,255,255,0.75); }
+.pub-tag-dark  { background: rgba(255,255,255,0.12); color: rgba(255,255,255,0.75); }
 
 .pub-card-body {
   padding: 1.5rem;
@@ -572,40 +574,26 @@ const categoryClass = (cat: string) => {
   flex: 1;
 }
 
-.pub-card-date { font-size: 0.75rem; color: rgba(255, 255, 255, 0.4); }
-.pub-card-light .pub-card-date { color: var(--text-tertiary); }
-
-.pub-card-title {
-  font-family: var(--font-serif);
-  font-size: 1.35rem;
-  color: #f9f8f6;
-  line-height: 1.25;
-}
-.pub-card-title-dark { color: var(--text-primary); }
-
-.pub-card-desc {
-  font-size: 0.875rem;
-  color: rgba(255, 255, 255, 0.55);
-  line-height: 1.65;
-  flex: 1;
-}
-.pub-card-desc-dark { color: var(--text-secondary); }
+.pub-card-date      { font-size: 0.75rem; color: var(--text-tertiary); }
+.pub-card-title     { font-family: var(--font-serif); font-size: 1.35rem; color: var(--text-primary); line-height: 1.25; }
+.pub-card-title-dark {}
+.pub-card-desc      { font-size: 0.875rem; color: var(--text-secondary); line-height: 1.65; flex: 1; }
+.pub-card-desc-dark {}
 
 .pub-card-cta {
   font-size: 0.8125rem;
   font-weight: 500;
-  color: rgba(255, 255, 255, 0.7);
+  color: var(--text-tertiary);
   margin-top: 0.5rem;
   transition: color 0.15s;
 }
-.pub-card-cta-dark { color: var(--text-secondary); }
-.pub-card:hover .pub-card-cta { color: #f9f8f6; }
-.pub-card-light:hover .pub-card-cta-dark { color: var(--text-primary); }
+.pub-card-cta-dark {}
+.pub-card:hover .pub-card-cta      { color: var(--accent); }
+.pub-card-light:hover .pub-card-cta-dark {}
 
 /* ── Platforms ────────────────────────────────────────────── */
 .platforms-section {
   padding: 0 0 5rem;
-  background: var(--bg);
 }
 
 .platforms-row {
@@ -685,7 +673,6 @@ const categoryClass = (cat: string) => {
 /* ── Projects ─────────────────────────────────────────────── */
 .projects-section {
   padding: 0 0 6rem;
-  background: var(--bg);
 }
 
 /* ── Scroll-reveal ─────────────────────────────────────────── */
@@ -702,17 +689,17 @@ const categoryClass = (cat: string) => {
 
 /* ── Entry animations ─────────────────────────────────────── */
 @keyframes fadeUp {
-  from { opacity: 0; transform: translateY(16px); }
+  from { opacity: 0; transform: translateY(20px); }
   to   { opacity: 1; transform: translateY(0); }
 }
 
 .hero-text {
-  animation: fadeUp 0.6s ease both;
+  animation: fadeUp 0.7s ease both;
 }
 
 .hero-showcase {
-  animation: fadeUp 0.6s ease both;
-  animation-delay: 0.15s;
+  animation: fadeUp 0.7s ease both;
+  animation-delay: 0.18s;
 }
 
 /* ── Responsive ───────────────────────────────────────────── */
@@ -720,7 +707,7 @@ const categoryClass = (cat: string) => {
   .hero-inner {
     grid-template-columns: 1fr;
     gap: 3rem;
-    padding: 4rem 0;
+    padding: clamp(2.5rem, 6vh, 4rem) 0 4rem;
   }
   .hero { min-height: auto; }
   .pub-grid { grid-template-columns: 1fr; }
@@ -731,6 +718,7 @@ const categoryClass = (cat: string) => {
   .hero-ctas { flex-direction: column; align-items: flex-start; }
   .section-inner { padding: 0 1.25rem; }
   .pub-section, .platforms-section { padding-top: 3.5rem; padding-bottom: 3.5rem; }
+  .hero-headline { font-size: 2.5rem; }
 }
 </style>
 

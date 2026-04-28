@@ -12,29 +12,58 @@ import Base from '../layouts/Base.astro';
 
     <div class="logo-grid">
 
-      <a href="mailto:jeffryarevalo@gmail.com" class="logo-tile" aria-label="Email Jeffry Arevalo">
-        <img src="/images/logos/email.jpeg" alt="Email" class="tile-img" />
+      <!-- Email -->
+      <a href="mailto:jeffryarevalo@outlook.com" class="logo-tile" aria-label="Email Jeffry Arevalo">
+        <div class="tile-icon">
+          <svg viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg" aria-hidden="true">
+            <rect x="2" y="4" width="20" height="16" rx="2.5" stroke="#c8392b" stroke-width="1.5"/>
+            <path d="M2 8l10 7 10-7" stroke="#c8392b" stroke-width="1.5" stroke-linejoin="round"/>
+          </svg>
+        </div>
         <span class="tile-label">Email</span>
       </a>
 
+      <!-- LinkedIn -->
       <a href="https://www.linkedin.com/in/jeffry-arevalo-855173261/"
          target="_blank" rel="noopener noreferrer"
-         class="logo-tile tile-linkedin" aria-label="LinkedIn profile">
-        <img src="/images/logos/linkedin.png" alt="LinkedIn" class="tile-img" />
+         class="logo-tile" aria-label="LinkedIn profile">
+        <div class="tile-icon">
+          <svg viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg" aria-hidden="true">
+            <path d="M16 8a6 6 0 016 6v7h-4v-7a2 2 0 00-4 0v7h-4V9h4v1.5A6 6 0 0116 8z" fill="#0A66C2"/>
+            <rect x="2" y="9" width="4" height="12" rx="1" fill="#0A66C2"/>
+            <circle cx="4" cy="4" r="2" fill="#0A66C2"/>
+          </svg>
+        </div>
         <span class="tile-label">LinkedIn</span>
       </a>
 
+      <!-- GitHub -->
       <a href="https://github.com/jeffryarevalo"
          target="_blank" rel="noopener noreferrer"
-         class="logo-tile tile-github" aria-label="GitHub profile">
-        <img src="/images/logos/github.jpeg" alt="GitHub" class="tile-img" />
+         class="logo-tile" aria-label="GitHub profile">
+        <div class="tile-icon">
+          <svg viewBox="0 0 24 24" fill="#f0ece4" xmlns="http://www.w3.org/2000/svg" aria-hidden="true">
+            <path d="M12 2C6.477 2 2 6.484 2 12.017c0 4.425 2.865 8.18 6.839 9.504.5.092.682-.217.682-.483 0-.237-.008-.868-.013-1.703-2.782.605-3.369-1.343-3.369-1.343-.454-1.158-1.11-1.466-1.11-1.466-.908-.62.069-.608.069-.608 1.003.07 1.531 1.032 1.531 1.032.892 1.53 2.341 1.088 2.91.832.092-.647.35-1.088.636-1.338-2.22-.253-4.555-1.113-4.555-4.951 0-1.093.39-1.988 1.029-2.688-.103-.253-.446-1.272.098-2.65 0 0 .84-.27 2.75 1.026A9.564 9.564 0 0112 6.844c.85.004 1.705.115 2.504.337 1.909-1.296 2.747-1.027 2.747-1.027.546 1.379.202 2.398.1 2.651.64.7 1.028 1.595 1.028 2.688 0 3.848-2.339 4.695-4.566 4.943.359.309.678.92.678 1.855 0 1.338-.012 2.419-.012 2.747 0 .268.18.58.688.482A10.019 10.019 0 0022 12.017C22 6.484 17.522 2 12 2z"/>
+          </svg>
+        </div>
         <span class="tile-label">GitHub</span>
       </a>
 
+      <!-- Tableau -->
       <a href="https://public.tableau.com/app/profile/jeffry.alejandro.arevalo.jurado/vizzes"
          target="_blank" rel="noopener noreferrer"
          class="logo-tile" aria-label="Tableau Public profile">
-        <img src="/images/logos/tableau.png" alt="Tableau" class="tile-img" />
+        <div class="tile-icon">
+          <svg viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg" aria-hidden="true">
+            <!-- Tableau's cross of bars mark -->
+            <rect x="10.75" y="3"   width="2.5" height="18" rx="1.25" fill="#E97627"/>
+            <rect x="3"    y="10.75" width="18" height="2.5"  rx="1.25" fill="#E97627"/>
+            <rect x="5"    y="7"    width="2"   height="10"  rx="1"    fill="#E97627" opacity="0.55"/>
+            <rect x="17"   y="7"    width="2"   height="10"  rx="1"    fill="#E97627" opacity="0.55"/>
+            <rect x="7"    y="5"    width="10"  height="2"   rx="1"    fill="#E97627" opacity="0.55"/>
+            <rect x="7"    y="17"   width="10"  height="2"   rx="1"    fill="#E97627" opacity="0.55"/>
+          </svg>
+        </div>
         <span class="tile-label">Tableau</span>
       </a>
 
@@ -73,46 +102,49 @@ import Base from '../layouts/Base.astro';
   justify-content: center;
   overflow: hidden;
   box-shadow: var(--shadow-card);
-  transition: border-color 0.2s, box-shadow 0.2s, transform 0.2s;
+  transition: border-color 0.25s, box-shadow 0.25s, transform 0.25s;
   cursor: pointer;
 }
 
 .logo-tile:hover {
-  border-color: var(--border-strong);
-  box-shadow: var(--shadow-lift);
+  border-color: rgba(200, 57, 43, 0.45);
+  box-shadow: 0 0 0 1px rgba(200,57,43,0.15), var(--shadow-lift);
   transform: translateY(-3px);
 }
 
-.tile-linkedin {
-  background: #f0f6ff;
+/* Icon wrapper — fixed size so it always renders regardless of flex context */
+.tile-icon {
+  width: 56px;
+  height: 56px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-shrink: 0;
 }
 
-.tile-github {
-  background: #f6f8fa;
-}
-
-.tile-img {
-  width: 60%;
-  height: 60%;
-  object-fit: contain;
+.tile-icon svg {
+  width: 56px;
+  height: 56px;
   display: block;
 }
 
+/* Label slides up from the bottom on hover */
 .tile-label {
   position: absolute;
   bottom: 0;
   left: 0;
   right: 0;
-  padding: 0.6rem;
+  padding: 0.55rem;
   text-align: center;
-  font-size: 0.75rem;
+  font-size: 0.7rem;
   font-weight: 500;
-  letter-spacing: 0.06em;
+  letter-spacing: 0.08em;
   text-transform: uppercase;
   color: var(--text-primary);
-  background: rgba(249, 248, 246, 0.93);
+  background: rgba(8, 8, 8, 0.88);
   backdrop-filter: blur(6px);
   -webkit-backdrop-filter: blur(6px);
+  border-top: 1px solid var(--border);
   transform: translateY(100%);
   transition: transform 0.22s ease;
 }

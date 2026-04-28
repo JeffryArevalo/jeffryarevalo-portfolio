@@ -15,9 +15,13 @@ const currentPath = Astro.url.pathname;
 <body>
   <header class="nav">
     <div class="nav-inner">
-      <a href="/" class="nav-logo">Jeffry Arevalo</a>
+      <a href="/" class="nav-logo" aria-label="Jeffry Arevalo — Home">
+        <img src="/images/logo.png" alt="" class="nav-logo-img" />
+        <span class="nav-brand-name">Jeffry Arevalo</span>
+      </a>
       <nav>
         <ul class="nav-links">
+          <li><a href="/" class:list={[{active: currentPath === '/'}]}>Home</a></li>
           <li><a href="/projects" class:list={[{active: currentPath.startsWith('/projects')}]}>Projects</a></li>
           <li><a href="/publications" class:list={[{active: currentPath.startsWith('/publications')}]}>Publications</a></li>
           <li><a href="/content" class:list={[{active: currentPath.startsWith('/content')}]}>Content</a></li>
@@ -33,6 +37,7 @@ const currentPath = Astro.url.pathname;
   </main>
 
   <footer>
+    <img src="/images/logo.png" alt="Jeffry Arevalo" class="footer-logo" />
     <p>© {new Date().getFullYear()} Jeffry Arevalo · Built with Astro · Hosted on Netlify</p>
   </footer>
 </body>
