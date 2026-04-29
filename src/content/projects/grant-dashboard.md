@@ -1,6 +1,7 @@
 ---
 title: "GrantDesk: Grant Management Dashboard"
 description: "A full-featured web dashboard for tracking federal and non-federal funding awards, compliance deadlines, and budget utilization across an active grant portfolio."
+date: 2026-03-01
 category: "Data Visualization"
 tools: ["HTML5", "CSS3", "Chart.js", "JavaScript", "localStorage"]
 links:
@@ -12,7 +13,7 @@ order: 1
 
 ## Overview
 
-GrantDesk is a browser-based grant management dashboard built for the HHS 60 Chief Operating Officer Division, tracking federal and non-federal funding awards across fiscal years 2025 and 2026.
+GrantDesk is a browser-based grant management dashboard for tracking federal and non-federal funding awards, compliance deadlines, and budget utilization across fiscal years 2025 and 2026.
 
 ## Key Features
 

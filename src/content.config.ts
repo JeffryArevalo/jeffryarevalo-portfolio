@@ -19,6 +19,7 @@ const projects = defineCollection({
   schema: z.object({
     title: z.string(),
     description: z.string(),
+    date: z.coerce.date(),
     category: z.enum(['Data Analysis', 'Data Visualization', 'AI / Automation', 'Software']),
     tools: z.array(z.string()),
     links: z.object({

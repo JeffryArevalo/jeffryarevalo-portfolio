@@ -3,7 +3,7 @@ import Base from '../../layouts/Base.astro';
 import { getCollection } from 'astro:content';
 
 const allProjects = await getCollection('projects');
-const projects = allProjects.sort((a, b) => (a.data.order ?? 99) - (b.data.order ?? 99));
+const projects = allProjects.sort((a, b) => b.data.date.valueOf() - a.data.date.valueOf());
 
 const categories = ['All', 'Data Analysis', 'Data Visualization', 'AI / Automation', 'Software'];
 

@@ -2,14 +2,37 @@
 import Base from '../layouts/Base.astro';
 
 const skills = [
-  { area: 'Data & Analytics', items: ['Python', 'SQL', 'Pandas', 'NumPy', 'Tableau', 'Power BI'] },
-  { area: 'AI & Automation', items: ['LLMs / Prompt Engineering', 'Claude / OpenAI APIs', 'n8n', 'Zapier', 'AI Agents'] },
-  { area: 'Software Development', items: ['JavaScript / TypeScript', 'Astro', 'React', 'Node.js', 'Git / GitHub'] },
-  { area: 'Data Journalism', items: ['Investigative Research', 'Data Storytelling', 'Interactive Visualizations', 'Source Verification'] },
+  { area: 'Data & Analytics',    items: ['Python', 'SQL', 'Pandas', 'NumPy', 'Tableau', 'Power BI'] },
+  { area: 'AI & Automation',     items: ['LLMs / Prompt Engineering', 'Claude / OpenAI APIs', 'n8n', 'Zapier', 'AI Agents'] },
+  { area: 'Software Development',items: ['JavaScript / TypeScript', 'Astro', 'React', 'Node.js', 'Git / GitHub'] },
+  { area: 'Data Journalism',     items: ['Investigative Research', 'Data Storytelling', 'Interactive Visualizations', 'Source Verification'] },
 ];
 ---
 
 <Base title="About — Jeffry Arevalo" description="Data journalist, analyst, and builder working at the intersection of data, AI, and communication.">
+
+  <!-- VIDEO HERO -->
+  <section class="about-hero">
+    <video class="about-hero-video" autoplay loop muted playsinline>
+      <source src="/images/about-hero.mp4" type="video/mp4" />
+    </video>
+    <div class="about-hero-overlay"></div>
+    <div class="about-hero-content">
+      <p class="about-eyebrow">Data Journalist · Analyst · Builder</p>
+      <h1 class="about-headline">Jeffry<br/>Arevalo</h1>
+      <p class="about-tagline">
+        Data analyst by training.<br/>
+        Journalist by instinct.<br/>
+        Builder by nature.
+      </p>
+      <div class="about-hero-ctas">
+        <a href="/publications" class="btn btn-primary">Read Publications</a>
+        <a href="/projects" class="btn btn-outline">View Projects</a>
+      </div>
+    </div>
+  </section>
+
+  <!-- BODY -->
   <div class="page-narrow">
 
     <div class="about-header">
@@ -52,31 +75,89 @@ const skills = [
     <div class="links-section">
       <h2>Find Me</h2>
       <div class="link-list">
-        <a href="https://www.linkedin.com/in/jeffry-arevalo-855173261/" target="_blank" rel="noopener" class="ext-link">
-          LinkedIn ↗
-        </a>
-        <a href="https://github.com/jeffryarevalo" target="_blank" rel="noopener" class="ext-link">
-          GitHub ↗
-        </a>
-        <a href="https://public.tableau.com/app/profile/jeffry.alejandro.arevalo.jurado/vizzes" target="_blank" rel="noopener" class="ext-link">
-          Tableau ↗
-        </a>
-        <a href="https://www.youtube.com/@BodyExplained-f5b" target="_blank" rel="noopener" class="ext-link">
-          YouTube ↗
-        </a>
-        <a href="https://www.instagram.com/soulvra/" target="_blank" rel="noopener" class="ext-link">
-          Instagram ↗
-        </a>
-        <a href="mailto:jeffryarevalo@gmail.com" class="ext-link">
-          Email ↗
-        </a>
+        <a href="https://www.linkedin.com/in/jeffry-arevalo-855173261/" target="_blank" rel="noopener" class="ext-link">LinkedIn ↗</a>
+        <a href="https://github.com/jeffryarevalo" target="_blank" rel="noopener" class="ext-link">GitHub ↗</a>
+        <a href="https://public.tableau.com/app/profile/jeffry.alejandro.arevalo.jurado/vizzes" target="_blank" rel="noopener" class="ext-link">Tableau ↗</a>
+        <a href="https://www.youtube.com/@BodyExplained-f5b" target="_blank" rel="noopener" class="ext-link">YouTube ↗</a>
+        <a href="https://www.instagram.com/soulvra/" target="_blank" rel="noopener" class="ext-link">Instagram ↗</a>
+        <a href="mailto:jeffryarevalo@outlook.com" class="ext-link">Email ↗</a>
       </div>
     </div>
 
   </div>
+
 </Base>
 
 <style>
+/* ── Hero ──────────────────────────────────────────────────── */
+.about-hero {
+  position: relative;
+  height: 90vh;
+  min-height: 560px;
+  overflow: hidden;
+  display: flex;
+  align-items: flex-start;
+}
+
+.about-hero-video {
+  position: absolute;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  object-position: top right;
+}
+
+.about-hero-overlay {
+  position: absolute;
+  inset: 0;
+  background: linear-gradient(
+    to right,
+    rgba(8,8,8,0.97) 0%,
+    rgba(8,8,8,0.85) 40%,
+    rgba(8,8,8,0.45) 65%,
+    rgba(8,8,8,0.10) 100%
+  );
+}
+
+/* Matches home page hero padding exactly */
+.about-hero-content {
+  position: relative;
+  z-index: 1;
+  padding: clamp(3rem, 7vh, 4.5rem) 2rem 0;
+  margin-left: max(2rem, calc((100vw - var(--max-width)) / 2));
+  max-width: 560px;
+}
+
+.about-eyebrow {
+  font-size: 0.72rem;
+  font-weight: 500;
+  text-transform: uppercase;
+  letter-spacing: 0.15em;
+  color: #c8392b;
+  margin-bottom: 1.5rem;
+  line-height: 1;
+}
+
+.about-headline {
+  font-family: var(--font-serif);
+  font-size: clamp(3.5rem, 8vw, 6.5rem);
+  line-height: 0.95;
+  color: #f0ece4;
+  letter-spacing: -0.02em;
+  margin-bottom: 1.75rem;
+}
+
+.about-tagline {
+  font-size: 1rem;
+  color: #9a9690;
+  line-height: 1.85;
+  margin-bottom: 2.25rem;
+}
+
+.about-hero-ctas { display: flex; gap: 0.75rem; flex-wrap: wrap; }
+
+/* ── Body (original layout) ────────────────────────────────── */
 .about-header { margin-bottom: 2rem; }
 .about-header h1 { font-size: 2.25rem; }
 
@@ -87,8 +168,9 @@ const skills = [
   line-height: 1.8;
   margin-bottom: 1.25rem;
 }
-.bio a { color: var(--text-primary); border-bottom: 1px solid var(--border-strong); }
-.bio a:hover { border-color: var(--text-primary); }
+.bio p:last-child { margin-bottom: 0; }
+.bio a { color: var(--text-primary); border-bottom: 1px solid var(--border-strong); transition: border-color 0.15s; }
+.bio a:hover { border-color: #c8392b; }
 .bio strong { color: var(--text-primary); font-weight: 500; }
 
 .skills-section { margin-bottom: 3rem; }
@@ -105,13 +187,15 @@ const skills = [
   border: 1px solid var(--border);
   border-radius: var(--radius);
   padding: 1.1rem 1.25rem;
+  transition: border-color 0.2s;
 }
+.skill-group:hover { border-color: var(--border-strong); }
 
 .skill-group h3 {
   font-family: var(--font-sans);
   font-size: 0.8125rem;
   font-weight: 500;
-  color: var(--text-tertiary);
+  color: #c8392b;
   text-transform: uppercase;
   letter-spacing: 0.06em;
   margin-bottom: 0.75rem;
@@ -136,7 +220,15 @@ const skills = [
   border-radius: var(--radius-sm);
   color: var(--text-secondary);
   background: var(--surface);
-  transition: all 0.15s;
+  transition: color 0.15s, border-color 0.15s, transform 0.15s;
 }
-.ext-link:hover { color: var(--text-primary); border-color: var(--border-strong); }
+.ext-link:hover { color: var(--text-primary); border-color: var(--border-strong); transform: translateY(-1px); }
+
+/* ── Responsive ────────────────────────────────────────────── */
+@media (max-width: 640px) {
+  .about-hero { height: 80vh; }
+  .about-hero-content { margin-left: 0; max-width: 100%; }
+  .about-hero-overlay { background: rgba(8,8,8,0.92); }
+  .skills-grid { grid-template-columns: 1fr; }
+}
 </style>
