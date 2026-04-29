@@ -71,12 +71,6 @@ const jsonLd = {
       </a>
 
       <div class="nav-right">
-        <!-- Availability badge -->
-        <a href="/contact" class="avail-badge" title="Open to opportunities">
-          <span class="avail-dot"></span>
-          <span class="avail-text">Available</span>
-        </a>
-
         <!-- Desktop nav -->
         <nav aria-label="Main navigation">
           <ul class="nav-links">
@@ -152,36 +146,6 @@ const jsonLd = {
   gap: 1.25rem;
 }
 
-/* ── Availability badge ────────────────────────────────────── */
-.avail-badge {
-  display: flex;
-  align-items: center;
-  gap: 0.4rem;
-  font-size: 0.75rem;
-  font-weight: 500;
-  color: var(--text-tertiary);
-  letter-spacing: 0.03em;
-  transition: color 0.15s;
-  white-space: nowrap;
-}
-.avail-badge:hover { color: var(--text-primary); }
-
-.avail-dot {
-  width: 7px;
-  height: 7px;
-  border-radius: 50%;
-  background: #2dba6a;
-  flex-shrink: 0;
-  box-shadow: 0 0 0 0 rgba(45, 186, 106, 0.4);
-  animation: pulse-avail 2.5s ease-in-out infinite;
-}
-
-@keyframes pulse-avail {
-  0%   { box-shadow: 0 0 0 0 rgba(45,186,106,0.5); }
-  70%  { box-shadow: 0 0 0 6px rgba(45,186,106,0); }
-  100% { box-shadow: 0 0 0 0 rgba(45,186,106,0); }
-}
-
 /* ── Hamburger ─────────────────────────────────────────────── */
 .nav-hamburger {
   display: none;
@@ -246,6 +210,5 @@ const jsonLd = {
 @media (max-width: 768px) {
   .nav-links     { display: none; }
   .nav-hamburger { display: flex; }
-  .avail-text    { display: none; }
 }
 </style>
