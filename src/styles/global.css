@@ -4,19 +4,19 @@
   --font-sans: 'DM Sans', sans-serif;
   --font-serif: 'Instrument Serif', serif;
 
-  /* Dark palette — consistent throughout the entire site */
-  --bg:            #080808;
-  --surface:       #111110;
-  --surface-raised: #181816;
-  --border:        #1e1e1e;
-  --border-strong: #2e2e2c;
+  /* Dark palette */
+  --bg:             #0a0a09;
+  --surface:        #1a1a18;
+  --surface-raised: #242422;
+  --border:         #2e2e2c;
+  --border-strong:  #424240;
 
   --text-primary:   #f0ece4;
-  --text-secondary: #9a9690;
-  --text-tertiary:  #5a5650;
+  --text-secondary: #c8c3bc;
+  --text-tertiary:  #948f89;
 
   --accent:       #c8392b;
-  --accent-muted: #181816;
+  --accent-muted: #242422;
 
   /* Category badge colours — darkened to work on dark surfaces */
   --tag-data:          #1c2d48;
@@ -101,7 +101,7 @@ p { color: var(--text-secondary); }
 
 .nav-brand-name {
   font-family: var(--font-serif);
-  font-size: 1rem;
+  font-size: 1.2rem;
   color: var(--text-primary);
   letter-spacing: -0.01em;
   line-height: 1;
