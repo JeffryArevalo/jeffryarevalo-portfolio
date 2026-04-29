@@ -7,6 +7,7 @@ tools: ["HTML5", "CSS3", "Chart.js", "JavaScript", "localStorage"]
 links:
   github: "https://github.com/JeffryArevalo/grant-dashboard"
   live: "https://jeffryarevalo.github.io/grant-dashboard/"
+image: "/images/project-grant-dashboard.png"
 featured: true
 order: 1
 ---

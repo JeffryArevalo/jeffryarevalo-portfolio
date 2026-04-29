@@ -7,6 +7,7 @@ tools: ["HTML5", "CSS3", "JavaScript", "localStorage"]
 links:
   github: "https://github.com/jeffryarevalo/RFP-Tracker"
   live: "https://jeffryarevalo.github.io/RFP-Tracker/"
+image: "/images/project-rfp-tracker.png"
 featured: true
 order: 3
 ---

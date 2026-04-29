@@ -6,6 +6,7 @@ category: "Software"
 tools: ["HTML5", "CSS3", "JavaScript"]
 links:
   live: "https://jlinteriorupholstery.com/"
+image: "/images/project-jl-upholstery.png"
 featured: true
 order: 2
 ---

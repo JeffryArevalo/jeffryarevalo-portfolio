@@ -4,6 +4,7 @@ description: "Who is really building artificial intelligence, what it is costing
 pubDate: 2026-04-15
 tags: ["AI", "Data Journalism", "Investigation", "Economics"]
 externalUrl: "https://jeffryarevalo.github.io/ai-race/"
+image: "/images/pub-ai-race-screen.png"
 ---
 
 An investigation into unprecedented capital investment in AI — $2.52T in projected global spend, 81% of Q1 2026 VC flowing into artificial intelligence, and 300M jobs affected globally.

@@ -11,6 +11,23 @@ const currentPath = Astro.url.pathname;
 const siteUrl     = Astro.site ?? new URL('https://jeffryarevalo.com');
 const canonicalURL = new URL(currentPath, siteUrl).toString();
 const ogImageURL   = new URL(ogImage, siteUrl).toString();
+
+const jsonLd = {
+  '@context': 'https://schema.org',
+  '@type': 'Person',
+  name: 'Jeffry Arevalo',
+  url: 'https://jeffryarevalo.com',
+  jobTitle: 'Data Journalist & Analyst',
+  description: 'Data journalist, analyst, and builder working at the intersection of data investigation, AI automation, and software development.',
+  email: 'jeffryarevalo@outlook.com',
+  sameAs: [
+    'https://www.linkedin.com/in/jeffry-arevalo-855173261/',
+    'https://github.com/jeffryarevalo',
+    'https://public.tableau.com/app/profile/jeffry.alejandro.arevalo.jurado/vizzes',
+    'https://www.youtube.com/@BodyExplained-f5b',
+    'https://www.instagram.com/soulvra/',
+  ],
+};
 ---
 <!doctype html>
 <html lang="en">
@@ -25,39 +42,71 @@ const ogImageURL   = new URL(ogImage, siteUrl).toString();
   <link rel="icon" type="image/svg+xml" href="/favicon.svg" />
 
   <!-- Open Graph -->
-  <meta property="og:type"        content="website" />
-  <meta property="og:site_name"   content="Jeffry Arevalo" />
-  <meta property="og:url"         content={canonicalURL} />
-  <meta property="og:title"       content={title} />
-  <meta property="og:description" content={description} />
-  <meta property="og:image"       content={ogImageURL} />
+  <meta property="og:type"         content="website" />
+  <meta property="og:site_name"    content="Jeffry Arevalo" />
+  <meta property="og:url"          content={canonicalURL} />
+  <meta property="og:title"        content={title} />
+  <meta property="og:description"  content={description} />
+  <meta property="og:image"        content={ogImageURL} />
   <meta property="og:image:width"  content="1200" />
   <meta property="og:image:height" content="630" />
-  <meta property="og:locale"      content="en_US" />
+  <meta property="og:locale"       content="en_US" />
 
   <!-- Twitter Card -->
   <meta name="twitter:card"        content="summary_large_image" />
   <meta name="twitter:title"       content={title} />
   <meta name="twitter:description" content={description} />
   <meta name="twitter:image"       content={ogImageURL} />
+
+  <!-- JSON-LD structured data -->
+  <script type="application/ld+json" set:html={JSON.stringify(jsonLd)} />
 </head>
 <body>
   <header class="nav">
     <div class="nav-inner">
+
       <a href="/" class="nav-logo" aria-label="Jeffry Arevalo — Home">
         <img src="/images/logo.png" alt="" class="nav-logo-img" />
         <span class="nav-brand-name">Jeffry Arevalo</span>
       </a>
-      <nav>
-        <ul class="nav-links">
-          <li><a href="/" class:list={[{active: currentPath === '/'}]}>Home</a></li>
-          <li><a href="/projects" class:list={[{active: currentPath.startsWith('/projects')}]}>Projects</a></li>
-          <li><a href="/publications" class:list={[{active: currentPath.startsWith('/publications')}]}>Publications</a></li>
-          <li><a href="/content" class:list={[{active: currentPath.startsWith('/content')}]}>Content</a></li>
-          <li><a href="/about" class:list={[{active: currentPath === '/about'}]}>About</a></li>
-          <li><a href="/contact" class:list={[{active: currentPath === '/contact'}]}>Contact</a></li>
-        </ul>
-      </nav>
+
+      <div class="nav-right">
+        <!-- Availability badge -->
+        <a href="/contact" class="avail-badge" title="Open to opportunities">
+          <span class="avail-dot"></span>
+          <span class="avail-text">Available</span>
+        </a>
+
+        <!-- Desktop nav -->
+        <nav aria-label="Main navigation">
+          <ul class="nav-links">
+            <li><a href="/" class:list={[{active: currentPath === '/'}]}>Home</a></li>
+            <li><a href="/projects" class:list={[{active: currentPath.startsWith('/projects')}]}>Projects</a></li>
+            <li><a href="/publications" class:list={[{active: currentPath.startsWith('/publications')}]}>Publications</a></li>
+            <li><a href="/content" class:list={[{active: currentPath.startsWith('/content')}]}>Content</a></li>
+            <li><a href="/about" class:list={[{active: currentPath === '/about'}]}>About</a></li>
+            <li><a href="/contact" class:list={[{active: currentPath === '/contact'}]}>Contact</a></li>
+          </ul>
+        </nav>
+
+        <!-- Hamburger button (mobile only) -->
+        <button class="nav-hamburger" id="nav-hamburger" aria-label="Open menu" aria-expanded="false">
+          <span></span><span></span><span></span>
+        </button>
+      </div>
+
+    </div>
+
+    <!-- Mobile menu -->
+    <div class="nav-mobile" id="nav-mobile" aria-hidden="true">
+      <ul class="nav-mobile-links">
+        <li><a href="/" class:list={[{active: currentPath === '/'}]}>Home</a></li>
+        <li><a href="/projects" class:list={[{active: currentPath.startsWith('/projects')}]}>Projects</a></li>
+        <li><a href="/publications" class:list={[{active: currentPath.startsWith('/publications')}]}>Publications</a></li>
+        <li><a href="/content" class:list={[{active: currentPath.startsWith('/content')}]}>Content</a></li>
+        <li><a href="/about" class:list={[{active: currentPath === '/about'}]}>About</a></li>
+        <li><a href="/contact" class:list={[{active: currentPath === '/contact'}]}>Contact</a></li>
+      </ul>
     </div>
   </header>
 
@@ -69,5 +118,134 @@ const ogImageURL   = new URL(ogImage, siteUrl).toString();
     <img src="/images/logo.png" alt="Jeffry Arevalo" class="footer-logo" />
     <p>© {new Date().getFullYear()} Jeffry Arevalo · Built with Astro · Hosted on Netlify</p>
   </footer>
+
+  <script>
+    const hamburger = document.getElementById('nav-hamburger');
+    const mobileMenu = document.getElementById('nav-mobile');
+
+    hamburger?.addEventListener('click', () => {
+      const isOpen = hamburger.getAttribute('aria-expanded') === 'true';
+      hamburger.setAttribute('aria-expanded', String(!isOpen));
+      hamburger.classList.toggle('open', !isOpen);
+      mobileMenu?.classList.toggle('open', !isOpen);
+      mobileMenu?.setAttribute('aria-hidden', String(isOpen));
+    });
+
+    // Close menu on link click
+    mobileMenu?.querySelectorAll('a').forEach(link => {
+      link.addEventListener('click', () => {
+        hamburger?.setAttribute('aria-expanded', 'false');
+        hamburger?.classList.remove('open');
+        mobileMenu.classList.remove('open');
+        mobileMenu.setAttribute('aria-hidden', 'true');
+      });
+    });
+  </script>
 </body>
 </html>
+
+<style>
+/* ── Nav right group ───────────────────────────────────────── */
+.nav-right {
+  display: flex;
+  align-items: center;
+  gap: 1.25rem;
+}
+
+/* ── Availability badge ────────────────────────────────────── */
+.avail-badge {
+  display: flex;
+  align-items: center;
+  gap: 0.4rem;
+  font-size: 0.75rem;
+  font-weight: 500;
+  color: var(--text-tertiary);
+  letter-spacing: 0.03em;
+  transition: color 0.15s;
+  white-space: nowrap;
+}
+.avail-badge:hover { color: var(--text-primary); }
+
+.avail-dot {
+  width: 7px;
+  height: 7px;
+  border-radius: 50%;
+  background: #2dba6a;
+  flex-shrink: 0;
+  box-shadow: 0 0 0 0 rgba(45, 186, 106, 0.4);
+  animation: pulse-avail 2.5s ease-in-out infinite;
+}
+
+@keyframes pulse-avail {
+  0%   { box-shadow: 0 0 0 0 rgba(45,186,106,0.5); }
+  70%  { box-shadow: 0 0 0 6px rgba(45,186,106,0); }
+  100% { box-shadow: 0 0 0 0 rgba(45,186,106,0); }
+}
+
+/* ── Hamburger ─────────────────────────────────────────────── */
+.nav-hamburger {
+  display: none;
+  flex-direction: column;
+  justify-content: center;
+  gap: 5px;
+  width: 32px;
+  height: 32px;
+  background: none;
+  border: none;
+  cursor: pointer;
+  padding: 4px;
+  flex-shrink: 0;
+}
+
+.nav-hamburger span {
+  display: block;
+  height: 1.5px;
+  background: var(--text-primary);
+  border-radius: 2px;
+  transition: transform 0.25s ease, opacity 0.25s ease;
+  transform-origin: center;
+}
+
+/* Animate to X when open */
+.nav-hamburger.open span:nth-child(1) { transform: translateY(6.5px) rotate(45deg); }
+.nav-hamburger.open span:nth-child(2) { opacity: 0; transform: scaleX(0); }
+.nav-hamburger.open span:nth-child(3) { transform: translateY(-6.5px) rotate(-45deg); }
+
+/* ── Mobile nav panel ──────────────────────────────────────── */
+.nav-mobile {
+  display: none;
+  border-top: 1px solid var(--border);
+  padding: 1rem 2rem 1.5rem;
+  background: rgba(8,8,8,0.98);
+}
+
+.nav-mobile.open { display: block; }
+
+.nav-mobile-links {
+  list-style: none;
+  padding: 0;
+  display: flex;
+  flex-direction: column;
+  gap: 0;
+}
+
+.nav-mobile-links li a {
+  display: block;
+  padding: 0.75rem 0;
+  font-size: 1rem;
+  font-weight: 400;
+  color: var(--text-secondary);
+  border-bottom: 1px solid var(--border);
+  transition: color 0.15s;
+}
+.nav-mobile-links li:last-child a { border-bottom: none; }
+.nav-mobile-links a:hover,
+.nav-mobile-links a.active { color: var(--text-primary); }
+
+/* ── Show hamburger on mobile, hide desktop nav ────────────── */
+@media (max-width: 768px) {
+  .nav-links     { display: none; }
+  .nav-hamburger { display: flex; }
+  .avail-text    { display: none; }
+}
+</style>

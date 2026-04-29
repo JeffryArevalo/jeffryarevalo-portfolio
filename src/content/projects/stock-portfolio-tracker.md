@@ -7,6 +7,7 @@ tools: ["TypeScript", "JavaScript", "HTML5", "CSS3", "localStorage"]
 links:
   github: "https://github.com/JeffryArevalo/stock-portfolio-tracker"
   live: "https://jeffryarevalo.github.io/stock-portfolio-tracker/"
+image: "/images/project-stock-tracker.png"
 featured: true
 order: 4
 ---
