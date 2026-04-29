@@ -15,7 +15,11 @@ const { Content } = await render(post);
 const isExternal = !!post.data.externalUrl;
 ---
 
-<Base title={`${post.data.title} — Jeffry Arevalo`} description={post.data.description}>
+<Base
+  title={`${post.data.title} — Jeffry Arevalo`}
+  description={post.data.description}
+  ogImage={post.data.image ?? '/images/pub-ai-race.jpg'}
+>
 
   {isExternal ? (
     <div class="pub-frame-wrapper">
