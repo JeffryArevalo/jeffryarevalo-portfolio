@@ -1,5 +1,5 @@
 ---
-title: "GrantDesk: Grant Management Dashboard"
+title: "GrantDesk"
 description: "A full-featured web dashboard for tracking federal and non-federal funding awards, compliance deadlines, and budget utilization across an active grant portfolio."
 date: 2026-03-01
 category: "Data Visualization"

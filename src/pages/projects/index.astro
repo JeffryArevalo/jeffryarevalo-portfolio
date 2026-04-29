@@ -104,12 +104,12 @@ const categoryClass = (cat: string) => {
 
 .project-card[hidden] { display: none; }
 
+/* Screenshot */
 .project-card-img-wrap {
   width: 100%;
   aspect-ratio: 16 / 9;
   overflow: hidden;
   background: var(--surface-raised);
-  border-radius: var(--radius) var(--radius) 0 0;
   flex-shrink: 0;
 }
 .project-card-img {
@@ -118,17 +118,27 @@ const categoryClass = (cat: string) => {
   object-fit: cover;
   object-position: top;
   display: block;
-  transition: transform 0.4s ease;
+  transition: transform 0.5s ease;
 }
-.project-card:hover .project-card-img { transform: scale(1.03); }
+.project-card:hover .project-card-img { transform: scale(1.04); }
 
+/* Content area */
 .project-card-content {
   padding: 1.25rem 1.5rem 1.5rem;
   display: flex;
   flex-direction: column;
-  gap: 0.5rem;
+  gap: 0.6rem;
   flex: 1;
 }
+
+/* Thin coloured accent line at the top of each card */
+.project-card[data-category="Data Visualization"]  { border-top: 2px solid #6b21a8; }
+.project-card[data-category="Data Analysis"]       { border-top: 2px solid #1a56db; }
+.project-card[data-category="AI / Automation"]     { border-top: 2px solid #92400e; }
+.project-card[data-category="Software"]            { border-top: 2px solid #065f46; }
+
+/* Remove img-wrap border-radius so accent line touches the edge */
+.project-card-img-wrap { border-radius: 0; }
 </style>
 
 <script>

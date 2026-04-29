@@ -225,24 +225,31 @@ const categoryClass = (cat: string) => {
         </div>
         <div class="cards-grid">
           {featuredProjects.map(project => (
-            <a href={`/projects/${project.id}`} class="project-card" data-animate-item>
-              <div style="display:flex; align-items:center; justify-content:space-between; margin-bottom:0.25rem;">
-                <span class={`category-badge ${categoryClass(project.data.category)}`}>
-                  {project.data.category}
-                </span>
-              </div>
-              <h3 class="project-card-title">{project.data.title}</h3>
-              <p class="project-card-desc">{project.data.description}</p>
-              <div class="project-card-footer">
-                <div class="tools-list">
-                  {project.data.tools.slice(0, 3).map(tool => (
-                    <span class="tool-tag">{tool}</span>
-                  ))}
+            <a href={`/projects/${project.id}`} class="project-card" data-animate-item data-category={project.data.category}>
+              {project.data.image && (
+                <div class="project-card-img-wrap">
+                  <img src={project.data.image} alt={project.data.title} class="project-card-img" />
                 </div>
-                <div class="card-links">
-                  {project.data.links?.github && <span class="card-link">GitHub ↗</span>}
-                  {project.data.links?.tableau && <span class="card-link">Tableau ↗</span>}
-                  {project.data.links?.live && <span class="card-link">Live ↗</span>}
+              )}
+              <div class="project-card-content">
+                <div style="display:flex; align-items:center; justify-content:space-between; margin-bottom:0.25rem;">
+                  <span class={`category-badge ${categoryClass(project.data.category)}`}>
+                    {project.data.category}
+                  </span>
+                </div>
+                <h3 class="project-card-title">{project.data.title}</h3>
+                <p class="project-card-desc">{project.data.description}</p>
+                <div class="project-card-footer">
+                  <div class="tools-list">
+                    {project.data.tools.slice(0, 3).map(tool => (
+                      <span class="tool-tag">{tool}</span>
+                    ))}
+                  </div>
+                  <div class="card-links">
+                    {project.data.links?.github && <span class="card-link">GitHub ↗</span>}
+                    {project.data.links?.tableau && <span class="card-link">Tableau ↗</span>}
+                    {project.data.links?.live && <span class="card-link">Live ↗</span>}
+                  </div>
                 </div>
               </div>
             </a>
@@ -677,6 +684,36 @@ const categoryClass = (cat: string) => {
 .projects-section {
   padding: 0 0 6rem;
 }
+
+.project-card-img-wrap {
+  width: 100%;
+  aspect-ratio: 16 / 9;
+  overflow: hidden;
+  background: var(--surface-raised);
+  flex-shrink: 0;
+}
+.project-card-img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  object-position: top;
+  display: block;
+  transition: transform 0.5s ease;
+}
+.project-card:hover .project-card-img { transform: scale(1.04); }
+
+.project-card-content {
+  padding: 1.25rem 1.5rem 1.5rem;
+  display: flex;
+  flex-direction: column;
+  gap: 0.5rem;
+  flex: 1;
+}
+
+.project-card[data-category="Data Visualization"] { border-top: 2px solid #6b21a8; }
+.project-card[data-category="Data Analysis"]      { border-top: 2px solid #1a56db; }
+.project-card[data-category="AI / Automation"]    { border-top: 2px solid #92400e; }
+.project-card[data-category="Software"]           { border-top: 2px solid #065f46; }
 
 /* ── Scroll-reveal ─────────────────────────────────────────── */
 [data-animate-item] {

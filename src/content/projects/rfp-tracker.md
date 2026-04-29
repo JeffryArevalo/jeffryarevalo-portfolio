@@ -1,5 +1,5 @@
 ---
-title: "RFP Tracker — Proposal Pipeline Dashboard"
+title: "RFP Tracker"
 description: "A browser-based dashboard for managing Request for Proposal pipelines, tracking opportunities from submission through award across the full proposal lifecycle."
 date: 2026-04-28
 category: "Data Visualization"

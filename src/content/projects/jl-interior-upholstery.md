@@ -1,5 +1,5 @@
 ---
-title: "JL Interior Upholstery — Business Website"
+title: "JL Interior Upholstery"
 description: "A bilingual business website for a local upholstery and furniture restoration company, featuring a service portfolio, commercial and residential offerings, and a free estimate request flow."
 date: 2026-04-20
 category: "Software"
